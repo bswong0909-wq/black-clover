@@ -3,24 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>黑色五葉草：魔導書專精對決（完整版）</title>
+  <title>黑色五葉草：魔導書專精對決（被動天賦・多流派・存檔版）</title>
   <style>
     :root {
-      --bg: #07090f;
-      --bg-grad: radial-gradient(circle at 50% 0%, #19223c 0%, #07090f 75%);
-      --panel: #101626;
-      --panel-2: #172036;
-      --panel-3: #1f2b47;
-      --border: rgba(255, 255, 255, 0.1);
-      --border-gold: rgba(245, 197, 66, 0.48);
+      --bg: #060810;
+      --bg-grad: radial-gradient(circle at 50% -10%, #1d2948 0%, #090d1a 55%, #05070d 100%);
+      --panel: rgba(16, 22, 38, 0.92);
+      --panel-2: rgba(24, 34, 58, 0.95);
+      --panel-3: #223052;
+      --border: rgba(255, 255, 255, 0.11);
+      --border-gold: rgba(245, 197, 66, 0.52);
       --text: #f4f7fc;
-      --muted: #93a1be;
+      --muted: #94a3b8;
       --gold: #f5c542;
-      --gold-dim: rgba(245, 197, 66, 0.15);
+      --gold-dim: rgba(245, 197, 66, 0.16);
       --mana: #38bdf8;
       --danger: #f43f5e;
       --success: #22c55e;
-      --purple: #a855f7;
+      --purple: #c084fc;
+      --theme-accent: #ef4444;
+      --theme-glow: rgba(239, 68, 68, 0.22);
     }
 
     * {
@@ -42,8 +44,8 @@
     .screen {
       display: none;
       min-height: 100vh;
-      padding: 14px 14px 92px 14px;
-      max-width: 1080px;
+      padding: 14px 14px 80px 14px;
+      max-width: 1120px;
       margin: 0 auto;
     }
     .screen.active { display: block; }
@@ -62,10 +64,10 @@
 
     .magic-circle-wrap {
       position: absolute;
-      width: 440px;
-      height: 440px;
+      width: 480px;
+      height: 480px;
       pointer-events: none;
-      opacity: 0.48;
+      opacity: 0.52;
       animation: spinSlow 36s linear infinite;
     }
     @keyframes spinSlow { to { transform: rotate(360deg); } }
@@ -77,50 +79,50 @@
       height: 6px;
       border-radius: 50%;
       background: var(--gold);
-      box-shadow: 0 0 8px var(--gold);
+      box-shadow: 0 0 10px var(--gold);
       opacity: 0;
       animation: floatUp linear infinite;
       pointer-events: none;
     }
     @keyframes floatUp {
       0% { transform: translateY(0) scale(0.6); opacity: 0; }
-      20% { opacity: 0.85; }
+      20% { opacity: 0.9; }
       80% { opacity: 0.55; }
-      100% { transform: translateY(-105vh) scale(1.2); opacity: 0; }
+      100% { transform: translateY(-105vh) scale(1.25); opacity: 0; }
     }
 
     .title-box {
       position: relative;
       z-index: 10;
-      background: rgba(13, 18, 33, 0.94);
+      background: rgba(12, 17, 32, 0.94);
       border: 1px solid var(--border-gold);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(245, 197, 66, 0.14) inset;
-      border-radius: 24px;
-      padding: 36px 24px;
-      max-width: 550px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.78), 0 0 36px rgba(245, 197, 66, 0.16) inset;
+      border-radius: 26px;
+      padding: 38px 26px;
+      max-width: 560px;
       width: 100%;
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(12px);
     }
     .crest-hero {
-      width: 84px;
-      height: 84px;
+      width: 90px;
+      height: 90px;
       margin: 0 auto 14px auto;
       display: block;
-      filter: drop-shadow(0 0 12px rgba(245, 197, 66, 0.42));
+      filter: drop-shadow(0 0 14px rgba(245, 197, 66, 0.48));
     }
     .title-badge {
       display: inline-block;
-      padding: 4px 14px;
+      padding: 5px 15px;
       border-radius: 999px;
       background: var(--gold-dim);
       color: var(--gold);
       font-size: 12px;
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: 1px;
       margin-bottom: 12px;
-      border: 1px solid rgba(245, 197, 66, 0.35);
+      border: 1px solid rgba(245, 197, 66, 0.38);
     }
-    h1 { font-size: 26px; margin-bottom: 12px; color: #fff; line-height: 1.35; }
+    h1 { font-size: 27px; margin-bottom: 12px; color: #fff; line-height: 1.35; text-shadow: 0 2px 12px rgba(0,0,0,0.6); }
     .subtitle { color: var(--muted); font-size: 14px; line-height: 1.65; margin-bottom: 24px; }
 
     button {
@@ -133,19 +135,20 @@
       touch-action: manipulation;
       user-select: none;
       -webkit-user-select: none;
-      transition: transform 0.12s ease, opacity 0.15s ease, border-color 0.15s ease;
+      transition: transform 0.12s ease, opacity 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
     }
-    button:active { transform: scale(0.97); }
-    button:disabled { opacity: 0.4; cursor: not-allowed; }
+    button:active:not(:disabled) { transform: scale(0.96); }
+    button:disabled { opacity: 0.42; cursor: not-allowed; }
 
     .btn-gold {
-      background: linear-gradient(135deg, #f5c542, #d97706);
+      background: linear-gradient(135deg, #fde047, #f59e0b, #d97706);
       color: #111;
-      box-shadow: 0 4px 16px rgba(245, 197, 66, 0.3);
+      box-shadow: 0 4px 18px rgba(245, 197, 66, 0.34);
     }
-    .btn-primary { background: linear-gradient(135deg, #2563eb, #4f46e5); color: #fff; }
-    .btn-purple { background: linear-gradient(135deg, #7e22ce, #c026d3); color: #fff; }
+    .btn-primary { background: linear-gradient(135deg, #2563eb, #4f46e5); color: #fff; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3); }
+    .btn-purple { background: linear-gradient(135deg, #7e22ce, #c026d3); color: #fff; box-shadow: 0 4px 14px rgba(168, 85, 247, 0.3); }
     .btn-success { background: linear-gradient(135deg, #16a34a, #15803d); color: #fff; }
+    .btn-danger { background: linear-gradient(135deg, #e11d48, #be123c); color: #fff; }
     .btn-ghost { background: var(--panel-2); color: var(--text); border: 1px solid var(--border); }
     .btn-sm { padding: 7px 12px; font-size: 12px; border-radius: 9px; }
 
@@ -160,21 +163,25 @@
       border-radius: 16px;
       margin-bottom: 14px;
       border: 1px solid var(--border);
+      backdrop-filter: blur(8px);
     }
     .stats-row { display: flex; gap: 8px; flex-wrap: wrap; font-size: 13px; align-items: center; }
     .pill {
       background: var(--panel-2);
       padding: 6px 12px;
       border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
     }
 
     .lobby-layout {
       display: grid;
-      grid-template-columns: 330px 1fr;
+      grid-template-columns: 355px 1fr;
       gap: 14px;
     }
-    @media (max-width: 840px) {
+    @media (max-width: 860px) {
       .lobby-layout { grid-template-columns: 1fr; }
     }
 
@@ -183,9 +190,10 @@
       border: 1px solid var(--border);
       border-radius: 18px;
       padding: 16px;
+      backdrop-filter: blur(8px);
     }
     .section-title {
-      font-size: 16px;
+      font-size: 15.5px;
       font-weight: 800;
       margin-bottom: 10px;
       display: flex;
@@ -212,34 +220,47 @@
       flex-direction: column;
       align-items: center;
       gap: 6px;
+      position: relative;
+      overflow: hidden;
     }
     .char-card.active {
-      border-color: var(--gold);
-      background: linear-gradient(180deg, rgba(245, 197, 66, 0.16), rgba(23, 32, 54, 0.95));
-      box-shadow: 0 0 16px rgba(245, 197, 66, 0.16);
+      border-color: var(--theme-accent);
+      background: linear-gradient(180deg, var(--theme-glow), rgba(23, 32, 54, 0.96));
+      box-shadow: 0 0 18px var(--theme-glow);
     }
     .avatar-frame {
-      width: 54px;
-      height: 54px;
+      width: 56px;
+      height: 56px;
       border-radius: 50%;
       padding: 3px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06);
+      border: 2px solid rgba(255,255,255,0.14);
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
+      overflow: hidden;
+      position: relative;
     }
-    .char-card.active .avatar-frame { border-color: var(--gold); }
+    .avatar-frame.lg { width: 68px; height: 68px; }
+    .avatar-frame img.char-avatar-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      display: block;
+    }
+    .char-card.active .avatar-frame { border-color: var(--theme-accent); }
     .char-name { font-size: 14px; font-weight: 800; }
     .char-sub { font-size: 11px; color: var(--muted); }
 
     .selected-char-banner {
-      background: var(--panel-2);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 12px;
+      background: linear-gradient(135deg, var(--theme-glow), rgba(20, 28, 48, 0.96));
+      border: 1px solid var(--theme-accent);
+      border-radius: 16px;
+      padding: 13px;
       margin-bottom: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
     }
     .banner-top {
       display: flex;
@@ -247,15 +268,46 @@
       gap: 12px;
       margin-bottom: 10px;
     }
+    .passive-box {
+      background: rgba(8, 12, 24, 0.82);
+      border: 1px solid rgba(245, 197, 66, 0.35);
+      border-radius: 11px;
+      padding: 9px 11px;
+      margin-bottom: 10px;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    .passive-title {
+      color: var(--gold);
+      font-weight: 800;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .stat-mini-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+    .stat-mini-box {
+      background: rgba(8, 12, 24, 0.72);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 6px 4px;
+      text-align: center;
+    }
+    .stat-mini-box span { display: block; font-size: 10px; color: var(--muted); }
+    .stat-mini-box strong { font-size: 13px; color: #fff; }
+
     .equip-slots-mini {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 6px;
       padding-top: 8px;
-      border-top: 1px solid rgba(255,255,255,0.06);
+      border-top: 1px solid rgba(255,255,255,0.08);
     }
     .slot-pill {
-      background: var(--panel);
+      background: rgba(8, 12, 24, 0.72);
       border: 1px solid rgba(255,255,255,0.08);
       border-radius: 8px;
       padding: 6px;
@@ -284,25 +336,49 @@
       border-radius: 10px;
       font-size: 13px;
       font-weight: 800;
+      position: relative;
     }
     .tab-btn.active {
       background: var(--panel-3);
       color: var(--gold);
       border: 1px solid rgba(245, 197, 66, 0.35);
     }
+    .notify-dot {
+      display: none;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #f59e0b;
+      box-shadow: 0 0 8px #f59e0b;
+      position: absolute;
+      top: 7px;
+      right: 8px;
+    }
+    .notify-dot.show { display: inline-block; }
     .tab-pane { display: none; }
     .tab-pane.active { display: block; }
 
+    .style-guide-box {
+      background: rgba(56, 189, 248, 0.08);
+      border: 1px solid rgba(56, 189, 248, 0.28);
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin-top: 8px;
+      font-size: 12px;
+      line-height: 1.55;
+      color: #dbeafe;
+    }
+
     .deck-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
       gap: 10px;
       margin-top: 10px;
     }
     .skill-card {
-      background: var(--panel-2);
+      background: linear-gradient(165deg, rgba(28, 39, 66, 0.96), rgba(15, 22, 39, 0.98));
       border: 1px solid var(--border);
-      border-radius: 14px;
+      border-radius: 15px;
       padding: 12px;
       text-align: left;
       color: var(--text);
@@ -310,13 +386,17 @@
       flex-direction: column;
       justify-content: space-between;
       gap: 8px;
+      position: relative;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.32);
     }
+    .skill-card.rarity-border-ssr { border-color: rgba(245, 158, 11, 0.45); box-shadow: 0 6px 18px rgba(245, 158, 11, 0.14); }
+    .skill-card.rarity-border-sr { border-color: rgba(192, 132, 252, 0.38); }
     .skill-card.in-deck {
       border-color: var(--success);
-      background: linear-gradient(180deg, rgba(34, 197, 94, 0.11), var(--panel-2));
+      background: linear-gradient(175deg, rgba(34, 197, 94, 0.14), rgba(16, 24, 42, 0.98));
     }
     .skill-card.locked-card {
-      opacity: 0.65;
+      opacity: 0.68;
       border-style: dashed;
     }
     .skill-head {
@@ -325,11 +405,11 @@
       gap: 10px;
     }
     .skill-icon-box {
-      width: 38px;
-      height: 38px;
-      border-radius: 10px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
+      width: 40px;
+      height: 40px;
+      border-radius: 11px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -344,13 +424,14 @@
     }
     .skill-title-row strong { font-size: 13.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .cost-tag {
-      background: rgba(56, 189, 248, 0.18);
-      color: var(--mana);
-      padding: 2px 7px;
+      background: radial-gradient(circle at 30% 30%, #38bdf8, #0284c7);
+      color: #fff;
+      padding: 2px 8px;
       border-radius: 999px;
       font-size: 11px;
       font-weight: 800;
       flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(56, 189, 248, 0.35);
     }
     .lv-badge {
       background: rgba(245, 197, 66, 0.18);
@@ -361,23 +442,23 @@
       font-weight: 800;
       margin-left: 4px;
     }
-    .rarity-ssr { color: #f59e0b; }
-    .rarity-sr { color: #c084fc; }
-    .rarity-r { color: #38bdf8; }
+    .rarity-ssr { color: #f59e0b; font-weight: 800; }
+    .rarity-sr { color: #c084fc; font-weight: 800; }
+    .rarity-r { color: #38bdf8; font-weight: 700; }
 
     .deck-status-tag {
       font-size: 11px;
       font-weight: 700;
       padding-top: 6px;
-      border-top: 1px solid rgba(255,255,255,0.06);
+      border-top: 1px solid rgba(255,255,255,0.07);
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
     .summon-banner {
-      background: linear-gradient(135deg, rgba(126, 34, 206, 0.22), rgba(24, 32, 54, 0.95));
-      border: 1px solid rgba(192, 132, 252, 0.35);
+      background: linear-gradient(135deg, rgba(126, 34, 206, 0.25), rgba(24, 32, 54, 0.96));
+      border: 1px solid rgba(192, 132, 252, 0.42);
       border-radius: 16px;
       padding: 16px;
       margin-bottom: 14px;
@@ -396,9 +477,9 @@
       margin-top: 10px;
     }
     .equip-card {
-      background: var(--panel-2);
+      background: linear-gradient(165deg, rgba(28, 39, 66, 0.96), rgba(15, 22, 39, 0.98));
       border: 1px solid var(--border);
-      border-radius: 14px;
+      border-radius: 15px;
       padding: 12px;
       display: flex;
       flex-direction: column;
@@ -407,21 +488,44 @@
     }
     .equip-card.equipped {
       border-color: var(--gold);
-      background: linear-gradient(180deg, rgba(245, 197, 66, 0.12), var(--panel-2));
+      background: linear-gradient(180deg, rgba(245, 197, 66, 0.14), rgba(16, 24, 42, 0.98));
     }
-    .equip-actions {
-      display: flex;
-      gap: 6px;
-    }
+    .equip-actions { display: flex; gap: 6px; }
     .equip-actions button { flex: 1; }
 
     .battle-arena {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: stretch;
+      gap: 10px;
       margin-bottom: 12px;
     }
-    @media (max-width: 680px) { .battle-arena { grid-template-columns: 1fr; } }
+    @media (max-width: 720px) {
+      .battle-arena { grid-template-columns: 1fr; }
+      .vs-divider { display: none; }
+    }
+
+    .vs-divider {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0 4px;
+    }
+    .vs-badge {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #f59e0b, #b45309);
+      color: #111;
+      font-weight: 900;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 18px rgba(245, 158, 11, 0.45);
+      border: 2px solid #fde047;
+    }
 
     .combatant {
       background: var(--panel);
@@ -430,43 +534,137 @@
       padding: 14px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      justify-content: space-between;
+      gap: 10px;
+      position: relative;
+      transition: transform 0.15s ease, box-shadow 0.2s ease, border-color 0.2s ease;
     }
+    .combatant.player-box {
+      border-color: rgba(56, 189, 248, 0.28);
+      background: linear-gradient(135deg, rgba(16, 26, 48, 0.95), rgba(13, 19, 34, 0.98));
+    }
+    .combatant.enemy-box {
+      border-color: rgba(244, 63, 94, 0.32);
+      background: linear-gradient(225deg, rgba(42, 16, 28, 0.94), rgba(14, 18, 32, 0.98));
+    }
+    .combatant.shake-hit {
+      animation: hitShake 0.36s cubic-bezier(.36,.07,.19,.97) both;
+      border-color: #f43f5e !important;
+      box-shadow: 0 0 24px rgba(244, 63, 94, 0.45);
+    }
+    .combatant.shield-flash {
+      box-shadow: 0 0 24px rgba(56, 189, 248, 0.48);
+      border-color: #38bdf8 !important;
+    }
+    @keyframes hitShake {
+      10%, 90% { transform: translate3d(-3px, 0, 0); }
+      20%, 80% { transform: translate3d(5px, 0, 0); }
+      30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
+      40%, 60% { transform: translate3d(6px, 0, 0); }
+    }
+
+    .float-popup {
+      position: absolute;
+      top: 12px;
+      right: 18px;
+      font-size: 20px;
+      font-weight: 900;
+      pointer-events: none;
+      z-index: 30;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.9);
+      animation: floatDmg 0.95s ease-out forwards;
+    }
+    @keyframes floatDmg {
+      0% { opacity: 1; transform: translateY(0) scale(0.85); }
+      25% { transform: translateY(-10px) scale(1.15); }
+      100% { opacity: 0; transform: translateY(-38px) scale(1); }
+    }
+
+    .intent-banner {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(244, 63, 94, 0.16);
+      border: 1px solid rgba(244, 63, 94, 0.45);
+      color: #fda4af;
+      padding: 4px 10px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .intent-banner.blocked {
+      background: rgba(168, 85, 247, 0.2);
+      border-color: rgba(192, 132, 252, 0.5);
+      color: #e9d5ff;
+    }
+
     .combatant-top { display: flex; align-items: center; gap: 12px; }
-    .combatant-info { flex: 1; }
-    .combatant-name-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+    .combatant-info { flex: 1; min-width: 0; }
+    .combatant-name-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
     .hp-bar-bg {
-      height: 11px;
-      background: rgba(255,255,255,0.08);
+      height: 12px;
+      background: rgba(255,255,255,0.09);
       border-radius: 999px;
       overflow: hidden;
-      margin: 6px 0;
-      border: 1px solid rgba(255,255,255,0.06);
+      margin: 7px 0;
+      border: 1px solid rgba(255,255,255,0.08);
     }
-    .hp-bar-fill { height: 100%; background: linear-gradient(90deg, #16a34a, #4ade80); transition: width 0.25s ease; }
+    .hp-bar-fill { height: 100%; background: linear-gradient(90deg, #16a34a, #4ade80); transition: width 0.28s ease; }
     .hp-bar-fill.enemy { background: linear-gradient(90deg, #e11d48, #fb923c); }
     .status-list { display: flex; flex-wrap: wrap; gap: 6px; min-height: 24px; }
     .status-badge {
       font-size: 11px;
-      font-weight: 600;
+      font-weight: 700;
       padding: 3px 9px;
       border-radius: 8px;
       background: var(--panel-3);
-      border: 1px solid rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.1);
     }
 
     .hand-row {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(195px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(205px, 1fr));
       gap: 10px;
       margin-top: 10px;
     }
+    .battle-card {
+      background: linear-gradient(170deg, #1e2a4a 0%, #10172a 100%);
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 16px;
+      padding: 13px;
+      text-align: left;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 8px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.42);
+      position: relative;
+    }
+    .battle-card:hover:not(:disabled) {
+      transform: translateY(-5px);
+      border-color: var(--gold);
+      box-shadow: 0 12px 26px rgba(245, 197, 66, 0.24);
+    }
+    .battle-card.playable { border-color: rgba(56, 189, 248, 0.45); }
+
+    .pile-btn {
+      background: var(--panel-2);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .pile-btn:hover { border-color: var(--gold); color: var(--gold); }
+
     .log-box {
       background: #06080e;
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 12px;
-      max-height: 165px;
+      max-height: 155px;
       overflow-y: auto;
       font-size: 13px;
       line-height: 1.6;
@@ -478,11 +676,12 @@
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.82);
+      background: rgba(0, 0, 0, 0.84);
       z-index: 99;
       align-items: center;
       justify-content: center;
       padding: 16px;
+      backdrop-filter: blur(4px);
     }
     .modal-backdrop.open { display: flex; }
     .modal-box {
@@ -492,8 +691,9 @@
       padding: 20px;
       max-width: 680px;
       width: 100%;
-      max-height: 84vh;
+      max-height: 85vh;
       overflow-y: auto;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.8);
     }
     .stage-list {
       display: grid;
@@ -509,12 +709,35 @@
       text-align: left;
       color: var(--text);
     }
+    .stage-item.boss-stage { border-color: rgba(245, 197, 66, 0.42); }
     .stage-item.cleared { border-color: var(--success); }
     .stage-item.locked { opacity: 0.42; }
+
+    textarea.save-code-area {
+      width: 100%;
+      min-height: 86px;
+      background: #070a12;
+      color: #e2e8f0;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px;
+      font-family: monospace;
+      font-size: 12px;
+      margin: 8px 0;
+      resize: vertical;
+    }
+    .save-slot-card {
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
   </style>
 </head>
 <body>
 
+  <!-- 標題首頁 -->
   <section id="title-screen" class="active">
     <div class="magic-circle-wrap">
       <svg viewBox="0 0 200 200" width="100%" height="100%">
@@ -537,23 +760,25 @@
         <circle cx="50" cy="50" r="46" fill="#0f1526" stroke="url(#goldGrad)" stroke-width="2.5"/>
         <path d="M50 22 C42 22 39 34 48 44 C36 39 24 44 26 54 C28 62 40 60 47 52 C38 61 36 74 45 77 C50 78 50 67 50 58 C50 67 50 78 55 77 C64 74 62 61 53 52 C60 60 72 62 74 54 C76 44 64 39 52 44 C61 34 58 22 50 22 Z" fill="url(#goldGrad)"/>
       </svg>
-      <div class="title-badge">三葉草與五葉草・魔導書與裝備系統</div>
+      <div class="title-badge">三葉草與五葉草・被動天賦與多流派版</div>
       <h1>黑色五葉草：魔導書專精對決</h1>
       <p class="subtitle">
-        集結阿斯塔、尤諾、諾艾兒與夜見四大魔導士，研習召喚 40 張專屬技能書並昇華強化，鍛造魔導武器與防具，挑戰 30 關主線劇情（止步於言靈惡魔・扎格列德）或無盡模式。
+        集結阿斯塔、尤諾、諾艾兒與夜見四大魔導士，搭配專屬被動天賦與多流派配卡，鍛造魔導裝備，挑戰 30 關主線（每 5 關 15 波、其餘 12 波，止步於言靈惡魔・扎格列德）或無盡模式。
       </p>
       <button id="start-game-btn" class="btn-gold" type="button" onclick="enterLobby()">翻開魔導書・進入大廳</button>
     </div>
   </section>
 
+  <!-- 騎士團總部大廳 -->
   <section id="lobby-screen" class="screen">
     <div class="top-bar">
       <div><strong>騎士團總部大廳</strong> <span class="muted" id="mode-summary"></span></div>
       <div class="stats-row">
-        <span class="pill">金幣：<strong id="gold-display">400</strong></span>
-        <span class="pill">魔導書殘頁：<strong id="shards-display">30</strong></span>
-        <span class="pill">主線進度：<strong id="stage-progress-display">1 / 30 關</strong></span>
-        <span class="pill">無盡最高：<strong id="endless-best-display">0 波</strong></span>
+        <span class="pill">🪙 金幣：<strong id="gold-display">500</strong></span>
+        <span class="pill">📜 魔導書殘頁：<strong id="shards-display">30</strong></span>
+        <span class="pill">⚔️ 主線：<strong id="stage-progress-display">1 / 30 關</strong></span>
+        <span class="pill">♾️ 無盡最高：<strong id="endless-best-display">0 波</strong></span>
+        <button type="button" class="btn-gold btn-sm" onclick="openSaveManagerModal()">💾 存取遊戲存檔</button>
       </div>
     </div>
 
@@ -563,7 +788,7 @@
         <div class="char-grid" id="char-selector"></div>
         <div class="selected-char-banner" id="selected-char-banner"></div>
         <div class="mode-actions">
-          <button id="open-story-btn" class="btn-primary" type="button" onclick="openStageModal()">主線劇情遠征（30 關 × 25 波）</button>
+          <button id="open-story-btn" class="btn-primary" type="button" onclick="openStageModal()">主線劇情遠征（30 關・逢五關 15 波）</button>
           <button id="start-endless-btn" class="btn-purple" type="button" onclick="startBattle('endless')">無盡生存模式（戰敗上榜）</button>
           <button id="open-leaderboard-btn" class="btn-ghost" type="button" onclick="openLeaderboardModal()">查看無盡排行榜</button>
         </div>
@@ -572,8 +797,8 @@
       <div class="card">
         <div class="tab-bar">
           <button type="button" class="tab-btn active" id="tab-btn-deck" onclick="switchLobbyTab('deck')">出戰牌組（<span id="deck-count-tab">0</span>/8）</button>
-          <button type="button" class="tab-btn" id="tab-btn-grimoire" onclick="switchLobbyTab('grimoire')">技能書召喚與昇華</button>
-          <button type="button" class="tab-btn" id="tab-btn-equip" onclick="switchLobbyTab('equip')">魔導裝備與鍛造</button>
+          <button type="button" class="tab-btn" id="tab-btn-grimoire" onclick="switchLobbyTab('grimoire')">技能書召喚與昇華<span class="notify-dot" id="dot-grimoire"></span></button>
+          <button type="button" class="tab-btn" id="tab-btn-equip" onclick="switchLobbyTab('equip')">魔導裝備與鍛造<span class="notify-dot" id="dot-equip"></span></button>
         </div>
 
         <div id="tab-pane-deck" class="tab-pane active">
@@ -581,7 +806,7 @@
             <span>已解鎖技能卡（點擊編入或移出牌組）</span>
             <span class="muted">最少 4 張・最多 8 張</span>
           </div>
-          <p class="muted">只有已領悟的技能書可以編入牌組；未解鎖的進階技能可到「技能書召喚與昇華」領悟。</p>
+          <div class="style-guide-box" id="character-style-guide"></div>
           <div id="deck-builder-list" class="deck-grid"></div>
         </div>
 
@@ -589,7 +814,7 @@
           <div class="summon-banner">
             <div>
               <strong style="font-size:15px; color:var(--gold);">魔導書塔・奧義召喚陣</strong>
-              <p class="muted" style="margin-top:4px;">消耗金幣領悟當前角色的新技能書；抽到重複技能書會自動昇華強化（最高 Lv.5）！</p>
+              <p class="muted" style="margin-top:4px;">消耗金幣領悟當前角色的新技能書（未解鎖技能機率加倍）；重複抽到會自動昇華（最高 Lv.5）！</p>
             </div>
             <div class="summon-btns">
               <button type="button" class="btn-gold btn-sm" onclick="summonSkillBook(1)">單次領悟（100 金幣）</button>
@@ -597,7 +822,7 @@
             </div>
           </div>
           <div class="section-title">
-            <span>全角色技能書圖鑑與昇華強化</span>
+            <span>當前魔導士技能書圖鑑與昇華</span>
             <span class="muted">可用金幣或殘頁直接強化</span>
           </div>
           <div id="grimoire-catalog-list" class="deck-grid"></div>
@@ -615,45 +840,57 @@
     </div>
   </section>
 
+  <!-- 戰鬥畫面 -->
   <section id="battle-screen" class="screen">
     <div class="top-bar">
       <div>
         <strong id="battle-mode-label">主線第 1 關</strong>
-        <span class="pill" id="wave-display">第 1 / 25 波</span>
+        <span class="pill" id="wave-display">第 1 / 12 波</span>
+        <span class="pill" id="phase-display" style="color:var(--gold);">前鋒波次</span>
       </div>
       <div class="stats-row">
-        <span class="pill">魔力：<strong id="mana-display">3 / 3</strong></span>
+        <span class="pill" style="border-color:rgba(56,189,248,0.4);">💧 魔力：<strong id="mana-display" style="color:var(--mana);">3 / 3</strong></span>
         <button id="end-turn-btn" class="btn-gold" type="button" onclick="endPlayerTurn()">結束回合</button>
         <button id="retreat-btn" class="btn-ghost" type="button" onclick="enterLobby()">返回大廳</button>
       </div>
     </div>
 
     <div class="battle-arena">
-      <div class="combatant">
+      <div class="combatant player-box" id="player-combatant-box">
         <div class="combatant-top">
-          <div class="avatar-frame" id="player-avatar-box"></div>
+          <div class="avatar-frame lg" id="player-avatar-box"></div>
           <div class="combatant-info">
             <div class="combatant-name-row">
-              <strong id="player-name-display">玩家</strong>
-              <span class="pill" id="player-shield-display">護盾：0</span>
+              <strong id="player-name-display" style="font-size:16px;">玩家</strong>
+              <span class="pill" id="player-shield-display" style="color:#38bdf8;">🛡️ 護盾：0</span>
             </div>
             <div class="hp-bar-bg"><div id="player-hp-bar" class="hp-bar-fill" style="width:100%"></div></div>
-            <div style="font-size:13px;">生命：<span id="player-hp-text">110 / 110</span></div>
+            <div style="font-size:13px; display:flex; justify-content:space-between;">
+              <span>❤️ 生命：<strong id="player-hp-text">110 / 110</strong></span>
+              <span class="muted" id="player-atk-bonus-label"></span>
+            </div>
           </div>
         </div>
         <div class="status-list" id="player-statuses"></div>
       </div>
 
-      <div class="combatant">
+      <div class="vs-divider">
+        <div class="vs-badge">VS</div>
+      </div>
+
+      <div class="combatant enemy-box" id="enemy-combatant-box">
         <div class="combatant-top">
-          <div class="avatar-frame" id="enemy-avatar-box"></div>
+          <div class="avatar-frame lg" id="enemy-avatar-box"></div>
           <div class="combatant-info">
             <div class="combatant-name-row">
-              <strong id="enemy-name-display">魔導敵人</strong>
-              <span class="pill" id="enemy-shield-display">護盾：0</span>
+              <strong id="enemy-name-display" style="font-size:15.5px;">魔導敵人</strong>
+              <span class="pill" id="enemy-shield-display" style="color:#fbbf24;">🛡️ 護盾：0</span>
             </div>
             <div class="hp-bar-bg"><div id="enemy-hp-bar" class="hp-bar-fill enemy" style="width:100%"></div></div>
-            <div style="font-size:13px;">生命：<span id="enemy-hp-text">80 / 80</span></div>
+            <div style="font-size:13px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+              <span>💀 生命：<strong id="enemy-hp-text">80 / 80</strong></span>
+              <span id="enemy-intent-box" class="intent-banner">⚔️ 預計攻擊：10</span>
+            </div>
           </div>
         </div>
         <div class="status-list" id="enemy-statuses"></div>
@@ -663,7 +900,10 @@
     <div class="card" style="margin-bottom:12px;">
       <div class="section-title">
         <span>手牌區（點擊發動魔法）</span>
-        <span class="muted" id="draw-pile-info">牌庫剩餘：0｜棄牌堆：0</span>
+        <div style="display:flex; gap:6px; align-items:center;">
+          <button type="button" class="pile-btn" id="draw-pile-btn" onclick="openPileModal('draw')">📚 牌庫剩餘：0</button>
+          <button type="button" class="pile-btn" id="discard-pile-btn" onclick="openPileModal('discard')">🗂️ 棄牌堆：0</button>
+        </div>
       </div>
       <div id="hand-container" class="hand-row"></div>
     </div>
@@ -674,19 +914,21 @@
     </div>
   </section>
 
+  <!-- 關卡選擇彈窗 -->
   <div id="stage-modal" class="modal-backdrop">
     <div class="modal-box">
       <div class="section-title">
-        <span>主線劇情遠征（共 30 關・每關 25 波）</span>
+        <span>主線劇情遠征（共 30 關・每 5 關 15 波，其餘 12 波）</span>
         <button id="close-stage-modal" class="btn-ghost btn-sm" type="button" onclick="closeModal('stage-modal')">關閉</button>
       </div>
       <p class="muted">
-        按《黑色五葉草》原作節奏推進；第 30 關為目前最新主線進度（【最終關】深淵言靈惡魔・扎格列德），後續篇章留待日後更新。
+        第 1～4 關為 12 波，每逢第 5、10、15、20、25、30 關為 15 波章節決戰；第 30 關為目前最新主線進度（【最終關】深淵言靈惡魔・扎格列德）。
       </p>
       <div id="stage-list" class="stage-list"></div>
     </div>
   </div>
 
+  <!-- 通用訊息與存檔彈窗 -->
   <div id="info-modal" class="modal-backdrop">
     <div class="modal-box">
       <div class="section-title">
@@ -698,79 +940,153 @@
   </div>
 
   <script>
+    var CHAR_IMAGES = {
+      asta: "",
+      yuno: "",
+      noelle: "",
+      yami: "",
+      avatar_enemy: "",
+      avatar_boss: ""
+    };
+
     var SVG_ICONS = {
-      avatar_asta: '<svg viewBox="0 0 64 64" width="44" height="44"><circle cx="32" cy="32" r="30" fill="#18121e" stroke="#ef4444" stroke-width="2"/><path d="M22 44 L42 18 L46 22 L26 48 Z" fill="#111" stroke="#ef4444" stroke-width="1.8"/><path d="M18 36 L28 46" stroke="#ef4444" stroke-width="3" stroke-linecap="round"/></svg>',
-      avatar_yuno: '<svg viewBox="0 0 64 64" width="44" height="44"><circle cx="32" cy="32" r="30" fill="#0d211d" stroke="#34d399" stroke-width="2"/><path d="M18 36 C24 22 42 20 46 32 C49 41 37 46 31 39 C27 34 33 28 38 31" fill="none" stroke="#34d399" stroke-width="2.6" stroke-linecap="round"/><polygon points="32,12 35,20 43,20 36,25 39,33 32,28 25,33 28,25 21,20 29,20" fill="#fde047" opacity="0.85"/></svg>',
-      avatar_noelle: '<svg viewBox="0 0 64 64" width="44" height="44"><circle cx="32" cy="32" r="30" fill="#0d1b2e" stroke="#38bdf8" stroke-width="2"/><path d="M32 14 C23 26 20 34 20 40 C20 47 25 52 32 52 C39 52 44 47 44 40 C44 34 41 26 32 14 Z" fill="rgba(56,189,248,0.22)" stroke="#38bdf8" stroke-width="2.2"/><path d="M24 38 Q32 32 40 38" fill="none" stroke="#bae6fd" stroke-width="2" stroke-linecap="round"/></svg>',
-      avatar_yami: '<svg viewBox="0 0 64 64" width="44" height="44"><circle cx="32" cy="32" r="30" fill="#151024" stroke="#a855f7" stroke-width="2"/><circle cx="32" cy="32" r="14" fill="#05030a" stroke="#c084fc" stroke-width="2.2"/><path d="M14 46 L50 18" stroke="#e879f9" stroke-width="2.4" stroke-linecap="round"/></svg>',
-      avatar_enemy: '<svg viewBox="0 0 64 64" width="44" height="44"><circle cx="32" cy="32" r="30" fill="#231018" stroke="#f43f5e" stroke-width="2"/><polygon points="32,14 48,46 16,46" fill="rgba(244,63,94,0.2)" stroke="#f43f5e" stroke-width="2"/><circle cx="32" cy="35" r="5" fill="#fda4af"/></svg>',
-      avatar_boss: '<svg viewBox="0 0 64 64" width="44" height="44"><circle cx="32" cy="32" r="30" fill="#1e0b18" stroke="#f59e0b" stroke-width="2.4"/><path d="M18 22 L26 32 L32 16 L38 32 L46 22 L42 46 L22 46 Z" fill="rgba(245,158,11,0.25)" stroke="#fbbf24" stroke-width="2"/></svg>',
+      avatar_asta: '<svg viewBox="0 0 64 64" width="48" height="48"><circle cx="32" cy="32" r="30" fill="#18121e" stroke="#ef4444" stroke-width="2.2"/><path d="M21 45 L43 17 L48 21 L26 49 Z" fill="#111" stroke="#ef4444" stroke-width="2"/><path d="M17 36 L28 47" stroke="#ef4444" stroke-width="3.2" stroke-linecap="round"/><circle cx="44" cy="44" r="4" fill="#ef4444" opacity="0.7"/></svg>',
+      avatar_yuno: '<svg viewBox="0 0 64 64" width="48" height="48"><circle cx="32" cy="32" r="30" fill="#0d211d" stroke="#34d399" stroke-width="2.2"/><path d="M18 36 C24 22 42 20 46 32 C49 41 37 46 31 39 C27 34 33 28 38 31" fill="none" stroke="#34d399" stroke-width="2.8" stroke-linecap="round"/><polygon points="32,12 35,20 43,20 36,25 39,33 32,28 25,33 28,25 21,20 29,20" fill="#fde047" opacity="0.9"/></svg>',
+      avatar_noelle: '<svg viewBox="0 0 64 64" width="48" height="48"><circle cx="32" cy="32" r="30" fill="#0d1b2e" stroke="#38bdf8" stroke-width="2.2"/><path d="M32 13 C22 26 19 34 19 40 C19 48 25 53 32 53 C39 53 45 48 45 40 C45 34 42 26 32 13 Z" fill="rgba(56,189,248,0.26)" stroke="#38bdf8" stroke-width="2.2"/><path d="M23 39 Q32 32 41 39" fill="none" stroke="#bae6fd" stroke-width="2.2" stroke-linecap="round"/></svg>',
+      avatar_yami: '<svg viewBox="0 0 64 64" width="48" height="48"><circle cx="32" cy="32" r="30" fill="#151024" stroke="#a855f7" stroke-width="2.2"/><circle cx="32" cy="32" r="14" fill="#05030a" stroke="#c084fc" stroke-width="2.4"/><path d="M13 47 L51 17" stroke="#e879f9" stroke-width="2.6" stroke-linecap="round"/></svg>',
+      avatar_enemy: '<svg viewBox="0 0 64 64" width="48" height="48"><circle cx="32" cy="32" r="30" fill="#231018" stroke="#f43f5e" stroke-width="2.2"/><polygon points="32,14 48,46 16,46" fill="rgba(244,63,94,0.22)" stroke="#f43f5e" stroke-width="2.2"/><circle cx="32" cy="35" r="5" fill="#fda4af"/></svg>',
+      avatar_boss: '<svg viewBox="0 0 64 64" width="48" height="48"><circle cx="32" cy="32" r="30" fill="#1e0b18" stroke="#f59e0b" stroke-width="2.5"/><path d="M18 22 L26 32 L32 15 L38 32 L46 22 L42 46 L22 46 Z" fill="rgba(245,158,11,0.28)" stroke="#fbbf24" stroke-width="2.2"/></svg>',
       sword: '<svg viewBox="0 0 32 32" width="22" height="22"><path d="M7 25 L23 9 M19 7 L25 13 M9 20 L12 23" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round"/></svg>',
-      shield: '<svg viewBox="0 0 32 32" width="22" height="22"><path d="M16 4 L26 8 V16 C26 22 21 26 16 28 C11 26 6 22 6 16 V8 Z" fill="rgba(56,189,248,0.2)" stroke="#38bdf8" stroke-width="2"/></svg>',
+      shield: '<svg viewBox="0 0 32 32" width="22" height="22"><path d="M16 4 L26 8 V16 C26 22 21 26 16 28 C11 26 6 22 6 16 V8 Z" fill="rgba(56,189,248,0.22)" stroke="#38bdf8" stroke-width="2"/></svg>',
       wind: '<svg viewBox="0 0 32 32" width="22" height="22"><path d="M5 12 H21 C24 12 25 8 22 7 C19 6 18 9 19 10 M5 18 H24 C27 18 28 22 25 23 M8 24 H18" fill="none" stroke="#34d399" stroke-width="2.2" stroke-linecap="round"/></svg>',
-      water: '<svg viewBox="0 0 32 32" width="22" height="22"><path d="M16 5 C11 12 9 17 9 20 C9 24 12 27 16 27 C20 27 23 24 23 20 C23 17 21 12 16 5 Z" fill="rgba(56,189,248,0.25)" stroke="#38bdf8" stroke-width="2"/></svg>',
+      water: '<svg viewBox="0 0 32 32" width="22" height="22"><path d="M16 5 C11 12 9 17 9 20 C9 24 12 27 16 27 C20 27 23 24 23 20 C23 17 21 12 16 5 Z" fill="rgba(56,189,248,0.28)" stroke="#38bdf8" stroke-width="2"/></svg>',
       dark: '<svg viewBox="0 0 32 32" width="22" height="22"><circle cx="16" cy="16" r="9" fill="#090514" stroke="#c084fc" stroke-width="2"/><path d="M6 26 L26 6" stroke="#e879f9" stroke-width="2.2" stroke-linecap="round"/></svg>',
-      burst: '<svg viewBox="0 0 32 32" width="22" height="22"><polygon points="16,3 19,12 29,12 21,18 24,28 16,22 8,28 11,18 3,12 13,12" fill="rgba(245,197,66,0.25)" stroke="#f5c542" stroke-width="1.8"/></svg>',
-      armor: '<svg viewBox="0 0 32 32" width="22" height="22"><path d="M10 6 L16 9 L22 6 L26 12 L22 15 V26 H10 V15 L6 12 Z" fill="rgba(168,85,247,0.2)" stroke="#c084fc" stroke-width="2"/></svg>',
+      burst: '<svg viewBox="0 0 32 32" width="22" height="22"><polygon points="16,3 19,12 29,12 21,18 24,28 16,22 8,28 11,18 3,12 13,12" fill="rgba(245,197,66,0.28)" stroke="#f5c542" stroke-width="1.8"/></svg>',
+      armor: '<svg viewBox="0 0 32 32" width="22" height="22"><path d="M10 6 L16 9 L22 6 L26 12 L22 15 V26 H10 V15 L6 12 Z" fill="rgba(168,85,247,0.22)" stroke="#c084fc" stroke-width="2"/></svg>',
       ring: '<svg viewBox="0 0 32 32" width="22" height="22"><circle cx="16" cy="18" r="8" fill="none" stroke="#f5c542" stroke-width="2.2"/><polygon points="16,5 20,10 16,13 12,10" fill="#38bdf8"/></svg>'
     };
 
+    function escapeAttr(str) {
+      return String(str || "").replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+    }
+
+    function getAvatarHtml(imgKey, fallbackSvgKey, altLabel) {
+      var fallback = SVG_ICONS[fallbackSvgKey] || "";
+      var src = CHAR_IMAGES[imgKey];
+      if (src && String(src).trim() !== "") {
+        var safeSrc = escapeAttr(String(src).trim());
+        var safeAlt = escapeAttr(altLabel || imgKey);
+        var safeFallback = escapeAttr(fallback).replace(/'/g, "&#39;");
+        return '<img class="char-avatar-img" src="' + safeSrc + '" alt="' + safeAlt + '" onerror="this.outerHTML=\'' + safeFallback + '\'" />';
+      }
+      return fallback;
+    }
+
+    // 每 5 關 15 波，第 1~4 關 12 波
+    function getStageTotalWaves(stage) {
+      return (stage % 5 === 0) ? 15 : 12;
+    }
+
     var SKILL_POOL = {
       asta: [
-        { id: "asta_slash", name: "斷魔大劍・橫斬", cost: 0, rarity: "R", type: "速攻", icon: "sword", unlockedDefault: true, baseVal: 9, desc: "造成 {v} 反魔法物理傷害，並獲得 4 護盾。" },
-        { id: "demon_slayer_slash", name: "斷魔大劍・重斬", cost: 1, rarity: "R", type: "破盾", icon: "sword", unlockedDefault: true, baseVal: 15, desc: "造成 {v} 傷害；若敵人擁有護盾，額外造成 14 破盾傷害。" },
-        { id: "magic_deflect", name: "宿魔劍・魔力彈反", cost: 1, rarity: "R", type: "反制", icon: "shield", unlockedDefault: true, baseVal: 15, desc: "獲得 {v} 護盾；擋下攻擊時反擊 12 傷害。" },
-        { id: "anti_magic_roar", name: "不屈的咆哮", cost: 1, rarity: "R", type: "戰吼", icon: "burst", unlockedDefault: true, baseVal: 12, desc: "回復 {v} 生命並抽 1 張牌，下一次攻擊傷害 +25%。" },
-        { id: "demon_dweller_absorb", name: "宿魔劍・魔力解放斬", cost: 1, rarity: "SR", type: "吸血", icon: "sword", unlockedDefault: false, baseVal: 16, desc: "造成 {v} 傷害，並將傷害的 50% 轉化為自身護盾。" },
-        { id: "black_meteorite", name: "黑色隕石", cost: 2, rarity: "SR", type: "突進", icon: "burst", unlockedDefault: false, baseVal: 25, desc: "反魔法纏身突進造成 {v} 傷害，本回合閃避率 +25%。" },
-        { id: "demon_destroyer", name: "滅魔之劍・因果解放", cost: 2, rarity: "SR", type: "淨化", icon: "sword", unlockedDefault: false, baseVal: 20, desc: "清除敵人全部護盾與增益，造成 {v} 貫穿傷害。" },
-        { id: "black_hurricane", name: "黑色暴風", cost: 2, rarity: "SR", type: "連斬", icon: "burst", unlockedDefault: false, baseVal: 10, desc: "高速旋轉斬擊 3 次，每次造成 {v} 無視護盾傷害。" },
-        { id: "devil_union_slash", name: "惡魔同化・黑刃連擊", cost: 2, rarity: "SSR", type: "爆發", icon: "sword", unlockedDefault: false, baseVal: 18, desc: "造成 2 段 {v} 貫穿傷害，並回復 1 點魔力。" },
-        { id: "black_divider", name: "黑色分割者", cost: 3, rarity: "SSR", type: "終結", icon: "sword", unlockedDefault: false, baseVal: 42, desc: "巨大化反魔法黑刃斬落，無視護盾造成 {v} 巨額傷害。" }
+        { id: "asta_slash", name: "斷魔大劍・反魔法斬擊", cost: 0, rarity: "R", type: "反魔法", icon: "sword", unlockedDefault: true, baseVal: 9, desc: "揮動斷魔大劍斬出 {v} 反魔法傷害，並架起劍身獲得 4 護盾。" },
+        { id: "demon_slayer_slash", name: "斷魔大劍・破魔重擊", cost: 1, rarity: "R", type: "破盾", icon: "sword", unlockedDefault: true, baseVal: 15, desc: "以反魔法重刃劈出 {v} 傷害；若敵人擁有護盾，額外造成 14 破盾傷害。" },
+        { id: "magic_deflect", name: "宿魔劍・魔力彈反", cost: 1, rarity: "R", type: "反制", icon: "shield", unlockedDefault: true, baseVal: 15, desc: "以宿魔劍抵擋魔法獲得 {v} 護盾；擋下攻擊時反擊 12 反魔法傷害。" },
+        { id: "anti_magic_roar", name: "絕對不放棄的咆哮", cost: 1, rarity: "R", type: "戰吼", icon: "burst", unlockedDefault: true, baseVal: 12, desc: "憑藉不屈意志回復 {v} 生命並抽 1 張牌，下一次攻擊傷害 +25%。" },
+        { id: "demon_dweller_absorb", name: "宿魔劍・魔力解放斬", cost: 1, rarity: "SR", type: "吸收", icon: "sword", unlockedDefault: false, baseVal: 16, desc: "吸收魔力斬出 {v} 傷害，並將傷害的 50% 轉化為自身護盾。" },
+        { id: "black_meteorite", name: "黑色隕石", cost: 2, rarity: "SR", type: "黑暴牛", icon: "burst", unlockedDefault: false, baseVal: 25, desc: "纏繞反魔法高速突進造成 {v} 傷害，本回合閃避率 +25%。" },
+        { id: "demon_destroyer", name: "滅魔之劍・魔力消滅", cost: 2, rarity: "SR", type: "淨化", icon: "sword", unlockedDefault: false, baseVal: 20, desc: "消滅因果與魔導干涉，清除敵人全部護盾與減傷狀態，造成 {v} 貫穿傷害。" },
+        { id: "black_hurricane", name: "黑色暴風", cost: 2, rarity: "SR", type: "連斬", icon: "burst", unlockedDefault: false, baseVal: 10, desc: "反魔法化後高速旋轉斬擊 3 次，每次造成 {v} 無視護盾傷害。" },
+        { id: "devil_union_slash", name: "惡魔同化・黑刃連擊", cost: 2, rarity: "SSR", type: "惡魔同化", icon: "sword", unlockedDefault: false, baseVal: 18, desc: "與利貝同化斬出 2 段 {v} 貫穿傷害，並回復 1 點魔力。" },
+        { id: "black_divider", name: "黑色分割者", cost: 3, rarity: "SSR", type: "反魔法終結", icon: "sword", unlockedDefault: false, baseVal: 42, desc: "釋放龐大反魔法凝聚巨刃斬落，無視護盾造成 {v} 巨額傷害。" }
       ],
       yuno: [
-        { id: "wind_blade", name: "風魔法・疾風白弓", cost: 0, rarity: "R", type: "疊層", icon: "wind", unlockedDefault: true, baseVal: 8, desc: "造成 {v} 風傷，疊加 1 層【風精靈共鳴】（每層風傷 +20%）。" },
-        { id: "sylph_breeze", name: "風精靈的吐息", cost: 1, rarity: "R", type: "連擊", icon: "wind", unlockedDefault: true, baseVal: 9, desc: "造成 2 段 {v} 傷；若共鳴達 2 層以上，額外抽 1 張牌。" },
-        { id: "wind_barrier", name: "風創成・旋風壁障", cost: 1, rarity: "R", type: "閃避", icon: "shield", unlockedDefault: true, baseVal: 16, desc: "獲得 {v} 護盾，本回合閃避率 +35%。" },
-        { id: "gale_step", name: "疾風步法", cost: 0, rarity: "R", type: "過牌", icon: "wind", unlockedDefault: true, baseVal: 25, desc: "抽 1 張牌，本回合閃避率 +{v}%。" },
-        { id: "heavenly_wind_ark", name: "天風方舟・守護旋風", cost: 1, rarity: "SR", type: "防禦", icon: "shield", unlockedDefault: false, baseVal: 22, desc: "獲得 {v} 護盾並疊加 1 層【風精靈共鳴】。" },
-        { id: "spirit_dive", name: "精靈同化", cost: 2, rarity: "SR", type: "變身", icon: "burst", unlockedDefault: false, baseVal: 45, desc: "進入【精靈同化】2 回合：全傷害 +{v}%、閃避 +25% 並回 1 魔力。" },
-        { id: "spirit_storm", name: "精靈風暴", cost: 2, rarity: "SR", type: "爆發", icon: "burst", unlockedDefault: false, baseVal: 24, desc: "消耗全部共鳴（每層 +25% 傷），轟出 {v} 貫穿風炮。" },
-        { id: "euros_arrow", name: "風精靈・聖風之箭", cost: 2, rarity: "SSR", type: "狙擊", icon: "wind", unlockedDefault: false, baseVal: 32, desc: "無視護盾射出 {v} 傷害；若處於同化狀態則必定暴擊（1.4倍）。" },
-        { id: "boreas_halberd", name: "風精靈・北風之戟", cost: 3, rarity: "SSR", type: "重擊", icon: "sword", unlockedDefault: false, baseVal: 40, desc: "造成 {v} 傷害並削弱敵人下回合攻擊 30%。" },
-        { id: "zephyr_sword", name: "風精靈・西風之劍", cost: 3, rarity: "SSR", type: "終結", icon: "sword", unlockedDefault: false, baseVal: 38, desc: "凝聚高壓風刃斬擊 {v} 傷害；同化狀態下無視護盾並回 1 魔力。" }
+        { id: "wind_blade", name: "風創成・疾風白弓", cost: 0, rarity: "R", type: "風精靈", icon: "wind", unlockedDefault: true, baseVal: 8, desc: "射出疾風箭矢造成 {v} 傷害，疊加 1 層【風精靈共鳴】（每層風傷 +20%）。" },
+        { id: "sylph_breeze", name: "風精靈的吐息", cost: 1, rarity: "R", type: "貝爾連擊", icon: "wind", unlockedDefault: true, baseVal: 9, desc: "與貝爾聯手造成 2 段 {v} 傷；若共鳴達 2 層以上，額外抽 1 張牌。" },
+        { id: "wind_barrier", name: "風創成・旋風壁障", cost: 1, rarity: "R", type: "旋風防禦", icon: "shield", unlockedDefault: true, baseVal: 16, desc: "以狂風構築護盾獲得 {v} 護盾，本回合閃避率 +35%。" },
+        { id: "gale_step", name: "風魔法・疾風步法", cost: 0, rarity: "R", type: "身法", icon: "wind", unlockedDefault: true, baseVal: 25, desc: "乘風疾馳抽 1 張牌，本回合閃避率 +{v}%。" },
+        { id: "heavenly_wind_ark", name: "風創成・守護旋風", cost: 1, rarity: "SR", type: "風盾", icon: "shield", unlockedDefault: false, baseVal: 22, desc: "獲得 {v} 護盾並疊加 1 層【風精靈共鳴】。" },
+        { id: "spirit_dive", name: "精靈同化（Spirit Dive）", cost: 2, rarity: "SR", type: "精靈憑依", icon: "burst", unlockedDefault: false, baseVal: 45, desc: "與風精靈貝爾同化 2 回合：全傷害 +{v}%、閃避 +25% 並回 1 魔力。" },
+        { id: "spirit_storm", name: "精靈風暴", cost: 2, rarity: "SR", type: "共鳴爆發", icon: "burst", unlockedDefault: false, baseVal: 24, desc: "消耗全部【風精靈共鳴】（每層 +25% 傷），轟出 {v} 貫穿風暴。" },
+        { id: "euros_arrow", name: "風精靈・聖風之箭", cost: 2, rarity: "SSR", type: "精靈奧義", icon: "wind", unlockedDefault: false, baseVal: 32, desc: "無視護盾射出 {v} 傷害；若處於【精靈同化】則威力提升 1.4 倍。" },
+        { id: "boreas_halberd", name: "風精靈・北風之戟", cost: 3, rarity: "SSR", type: "精靈魔導具", icon: "sword", unlockedDefault: false, baseVal: 40, desc: "凝聚北風之戟造成 {v} 傷害並削弱敵人下回合攻擊 30%。" },
+        { id: "zephyr_sword", name: "風精靈・西風之劍", cost: 3, rarity: "SSR", type: "精靈終結", icon: "sword", unlockedDefault: false, baseVal: 38, desc: "凝聚西風之劍斬出 {v} 傷害；同化狀態下無視護盾並回 1 魔力。" }
       ],
       noelle: [
-        { id: "water_orb", name: "水創成・水球", cost: 0, rarity: "R", type: "疊層", icon: "water", unlockedDefault: true, baseVal: 8, desc: "造成 {v} 水傷，獲得 1 層【水壓】（每層令下一次水傷 +20%）。" },
-        { id: "sea_dragon_cradle", name: "海龍的搖籃", cost: 1, rarity: "R", type: "防禦", icon: "shield", unlockedDefault: true, baseVal: 18, desc: "獲得 {v} 護盾；若本回合護盾被打破，下回合 +1 魔力。" },
-        { id: "water_lance", name: "水槍連刺", cost: 1, rarity: "R", type: "連擊", icon: "water", unlockedDefault: true, baseVal: 9, desc: "造成 2 段 {v} 傷；若處於【女武神羽衣】，改為 4 段貫穿連擊。" },
-        { id: "royal_tide", name: "王族潮汐", cost: 1, rarity: "R", type: "循環", icon: "water", unlockedDefault: true, baseVal: 12, desc: "獲得 {v} 護盾、疊加 1 層【水壓】並抽 1 張牌。" },
-        { id: "valkyrie_dress", name: "女武神羽衣", cost: 2, rarity: "SR", type: "變身", icon: "burst", unlockedDefault: false, baseVal: 18, desc: "進入女武神形態 2 回合：水傷 +50%、閃避 +30% 並獲 {v} 護盾。" },
-        { id: "sea_dragon_roar", name: "海龍的咆哮", cost: 2, rarity: "SR", type: "爆發", icon: "water", unlockedDefault: false, baseVal: 20, desc: "消耗全部【水壓】（每層 +20%）並將現有護盾 50% 轉為 {v} 基礎傷。" },
-        { id: "point_blank_roar", name: "零距離・海龍咆哮", cost: 2, rarity: "SR", type: "貫穿", icon: "water", unlockedDefault: false, baseVal: 28, desc: "無視護盾造成 {v} 水傷，若擁有護盾則額外造成 12 傷害。" },
-        { id: "sea_dragon_lair", name: "海龍的巢穴", cost: 3, rarity: "SR", type: "反傷", icon: "shield", unlockedDefault: false, baseVal: 34, desc: "獲得 {v} 護盾；受擊時反彈 15 水柱傷害，持續 2 回合。" },
-        { id: "mermaid_form", name: "女武神・海神形態", cost: 2, rarity: "SSR", type: "神速", icon: "burst", unlockedDefault: false, baseVal: 24, desc: "造成 {v} 貫穿水傷，本回合閃避率 +50% 並抽 1 張牌。" },
-        { id: "saint_valkyrie", name: "聖域女武神・終焉之槍", cost: 3, rarity: "SSR", type: "終結", icon: "sword", unlockedDefault: false, baseVal: 44, desc: "無視護盾造成 {v} 神聖水傷，並回復 20 生命。" }
+        { id: "water_orb", name: "水創成・水球", cost: 0, rarity: "R", type: "水魔法", icon: "water", unlockedDefault: true, baseVal: 8, desc: "創成水球造成 {v} 傷害，累積 1 層【水壓】（每層令海龍咆哮 +20% 傷）。" },
+        { id: "sea_dragon_cradle", name: "海龍的搖籃", cost: 1, rarity: "R", type: "水盾", icon: "shield", unlockedDefault: true, baseVal: 18, desc: "以水流包覆自身獲得 {v} 護盾；若本回合護盾被打破，下回合 +1 魔力。" },
+        { id: "water_lance", name: "水創成・水槍連刺", cost: 1, rarity: "R", type: "水槍", icon: "water", unlockedDefault: true, baseVal: 9, desc: "射出 2 段 {v} 傷水槍；若處於【女武神羽衣】，改為 4 段貫穿連擊。" },
+        { id: "royal_tide", name: "西爾法王族潮汐", cost: 1, rarity: "R", type: "潮汐", icon: "water", unlockedDefault: true, baseVal: 12, desc: "獲得 {v} 護盾、累積 1 層【水壓】並抽 1 張牌。" },
+        { id: "valkyrie_dress", name: "女武神羽衣（Valkyrie Dress）", cost: 2, rarity: "SR", type: "戰鬥裝甲", icon: "burst", unlockedDefault: false, baseVal: 18, desc: "穿上水魔力戰鬥裝甲 2 回合：閃避 +30%、水槍強化並獲 {v} 護盾。" },
+        { id: "sea_dragon_roar", name: "海龍的咆哮", cost: 2, rarity: "SR", type: "海龍奧義", icon: "water", unlockedDefault: false, baseVal: 20, desc: "解放海龍激流，消耗全部【水壓】（每層 +20%）並將現有護盾 50% 轉為 {v} 基礎傷。" },
+        { id: "point_blank_roar", name: "零距離・海龍咆哮", cost: 2, rarity: "SR", type: "近身轟擊", icon: "water", unlockedDefault: false, baseVal: 28, desc: "無視護盾造成 {v} 水傷，若自身擁有護盾則額外造成 12 傷害。" },
+        { id: "sea_dragon_lair", name: "海龍的巢穴", cost: 3, rarity: "SR", type: "水結界", icon: "shield", unlockedDefault: false, baseVal: 34, desc: "展開水結界獲得 {v} 護盾；受擊時反彈 15 水柱傷害，持續 2 回合。" },
+        { id: "mermaid_form", name: "女武神・海神形態", cost: 2, rarity: "SSR", type: "高速水戰", icon: "burst", unlockedDefault: false, baseVal: 24, desc: "以海神之姿貫穿造成 {v} 傷害，本回合閃避率 +50% 並抽 1 張牌。" },
+        { id: "saint_valkyrie", name: "聖域女武神・終焉之槍", cost: 3, rarity: "SSR", type: "王族終結", icon: "sword", unlockedDefault: false, baseVal: 44, desc: "無視護盾造成 {v} 強力水槍傷害，並回復 20 生命。" }
       ],
       yami: [
-        { id: "ki_sense", name: "「氣」的感知", cost: 0, rarity: "R", type: "預判", icon: "dark", unlockedDefault: true, baseVal: 45, desc: "本回合閃避率 +{v}%；成功閃避敵人攻擊時立即回復 1 魔力。" },
-        { id: "dark_slash", name: "闇纏・無明斬", cost: 1, rarity: "R", type: "流血", icon: "dark", unlockedDefault: true, baseVal: 14, desc: "造成 {v} 傷並附加 2 層【闇蝕】（敵人回合末受流血傷害）。" },
-        { id: "iaido_slash", name: "闇纏・居合斬", cost: 1, rarity: "R", type: "削弱", icon: "sword", unlockedDefault: true, baseVal: 16, desc: "造成 {v} 傷，並令敵人下一次攻擊傷害降低 25%。" },
-        { id: "black_cocoon", name: "闇魔法・黑繭", cost: 1, rarity: "R", type: "防禦", icon: "shield", unlockedDefault: true, baseVal: 17, desc: "獲得 {v} 護盾，並對敵人附加 1 層【闇蝕】。" },
-        { id: "black_moon", name: "闇魔法・黑洞", cost: 2, rarity: "SR", type: "反制", icon: "dark", unlockedDefault: false, baseVal: 1, desc: "展開黑洞 1 回合：完全抵消敵人下一次攻擊並抽 {v} 張牌。" },
-        { id: "equinox_slash", name: "無明斬・彼岸", cost: 2, rarity: "SR", type: "引爆", icon: "burst", unlockedDefault: false, baseVal: 16, desc: "造成 {v} 傷並引爆敵人全部【闇蝕】層數（每層 14 傷害）。" },
-        { id: "dark_cloaked_avici", name: "闇纏・無間斬擊", cost: 2, rarity: "SR", type: "連擊", icon: "dark", unlockedDefault: false, baseVal: 12, desc: "造成 2 段 {v} 傷，每段附加 1 層【闇蝕】。" },
-        { id: "dimension_slash", name: "闇纏・次元斬", cost: 3, rarity: "SR", type: "貫穿", icon: "dark", unlockedDefault: false, baseVal: 38, desc: "斬裂空間，無視護盾造成 {v} 傷害。" },
-        { id: "death_thrust", name: "闇纏・死突", cost: 2, rarity: "SSR", type: "必殺", icon: "sword", unlockedDefault: false, baseVal: 35, desc: "零距離壓縮闇魔力貫穿敵人，無視護盾造成 {v} 傷害。" },
-        { id: "equinox_dimension", name: "次元斬・彼岸", cost: 3, rarity: "SSR", type: "終結", icon: "burst", unlockedDefault: false, baseVal: 48, desc: "無視護盾造成 {v} 毀滅傷害，並引爆全部【闇蝕】。" }
+        { id: "ki_sense", name: "「氣」的感知", cost: 0, rarity: "R", type: "氣感", icon: "dark", unlockedDefault: true, baseVal: 45, desc: "感知敵人「氣」的流動，本回合閃避率 +{v}%；成功閃避時下回合 +1 魔力。" },
+        { id: "dark_slash", name: "闇纏・無明斬", cost: 1, rarity: "R", type: "闇纏", icon: "dark", unlockedDefault: true, baseVal: 14, desc: "刀纏闇魔法斬出 {v} 傷害並附加 2 層【闇蝕】（敵人回合末受流血傷害）。" },
+        { id: "iaido_slash", name: "闇纏・居合斬", cost: 1, rarity: "R", type: "居合", icon: "sword", unlockedDefault: true, baseVal: 16, desc: "瞬發闇纏居合造成 {v} 傷害，並令敵人下一次攻擊傷害降低 25%。" },
+        { id: "black_cocoon", name: "闇魔法・黑繭", cost: 1, rarity: "R", type: "闇盾", icon: "shield", unlockedDefault: true, baseVal: 17, desc: "以闇魔法包裹自身獲得 {v} 護盾，並對敵人附加 1 層【闇蝕】。" },
+        { id: "black_moon", name: "闇魔法・黑洞", cost: 2, rarity: "SR", type: "吞噬", icon: "dark", unlockedDefault: false, baseVal: 1, desc: "展開黑洞吞噬魔法 1 回合：完全抵消敵人下一次攻擊並抽 {v} 張牌。" },
+        { id: "equinox_slash", name: "無明斬・彼岸", cost: 2, rarity: "SR", type: "彼岸引爆", icon: "burst", unlockedDefault: false, baseVal: 16, desc: "斬出 {v} 傷害並引爆敵人全部【闇蝕】層數（每層 14 傷害）。" },
+        { id: "dark_cloaked_avici", name: "闇纏・無間斬擊", cost: 2, rarity: "SR", type: "闇連擊", icon: "dark", unlockedDefault: false, baseVal: 12, desc: "造成 2 段 {v} 傷害，每段附加 1 層【闇蝕】。" },
+        { id: "dimension_slash", name: "闇纏・次元斬", cost: 3, rarity: "SR", type: "斬裂空間", icon: "dark", unlockedDefault: false, baseVal: 38, desc: "突破極限斬裂空間，無視護盾造成 {v} 傷害。" },
+        { id: "death_thrust", name: "闇纏・死突", cost: 2, rarity: "SSR", type: "突刺", icon: "sword", unlockedDefault: false, baseVal: 35, desc: "凝聚高密度闇魔力直刺，無視護盾造成 {v} 傷害。" },
+        { id: "equinox_dimension", name: "次元斬・彼岸", cost: 3, rarity: "SSR", type: "團長終結", icon: "burst", unlockedDefault: false, baseVal: 48, desc: "無視護盾造成 {v} 毀滅傷害，並引爆全部【闇蝕】。" }
       ]
     };
 
     var CHARACTERS = {
-      asta: { name: "阿斯塔", title: "反魔法・五葉草魔導書", avatar: "avatar_asta", maxHp: 120, maxMana: 3 },
-      yuno: { name: "尤諾", title: "風魔法・四葉草精靈使", avatar: "avatar_yuno", maxHp: 105, maxMana: 3 },
-      noelle: { name: "諾艾兒・西爾法", title: "水魔法・海神王族", avatar: "avatar_noelle", maxHp: 110, maxMana: 3 },
-      yami: { name: "夜見・介大", title: "闇魔法・黑色暴牛團長", avatar: "avatar_yami", maxHp: 115, maxMana: 3 }
+      asta: {
+        name: "阿斯塔",
+        title: "反魔法・五葉草魔導書",
+        avatar: "avatar_asta",
+        maxHp: 120,
+        maxMana: 3,
+        accent: "#ef4444",
+        glow: "rgba(239, 68, 68, 0.24)",
+        passiveName: "反魔法破盾",
+        passiveDesc: "所有攻擊對敵人「護盾」造成額外 +35% 破盾傷害。",
+        archetypes: "<strong>可選流派方向：</strong>①【破盾反擊續航流】（宿魔劍彈反＋魔力解放斬＋不屈咆哮，穩守反打） ②【惡魔同化貫穿流】（黑色暴風＋黑刃連擊＋黑色分割者，無視護盾高速斬殺）"
+      },
+      yuno: {
+        name: "尤諾",
+        title: "風魔法・四葉草精靈使",
+        avatar: "avatar_yuno",
+        maxHp: 105,
+        maxMana: 3,
+        accent: "#34d399",
+        glow: "rgba(52, 211, 153, 0.22)",
+        passiveName: "精靈風壓",
+        passiveDesc: "每打出 2 張技能卡，自動獲得 1 層【風精靈共鳴】。",
+        archetypes: "<strong>可選流派方向：</strong>①【共鳴疊層風暴流】（疾風白弓＋守護旋風＋精靈風暴，高層數一擊清場） ②【精靈同化閃避流】（精靈同化＋疾風步法＋聖風之箭，高閃避多段暴擊）"
+      },
+      noelle: {
+        name: "諾艾兒・西爾法",
+        title: "水魔法・海神王族",
+        avatar: "avatar_noelle",
+        maxHp: 110,
+        maxMana: 3,
+        accent: "#38bdf8",
+        glow: "rgba(56, 189, 248, 0.24)",
+        passiveName: "海神潮汐護體",
+        passiveDesc: "每回合首次獲得護盾時，額外獲得 4 點海神護盾並累積 1 層【水壓】。",
+        archetypes: "<strong>可選流派方向：</strong>①【海龍咆哮水壓流】（堆疊護盾與水壓，靠海龍咆哮轉化巨額爆發） ②【女武神羽衣連刺流】（開啟女武神羽衣後，水槍連刺變為 4 段貫穿＋反彈水柱）"
+      },
+      yami: {
+        name: "夜見・介大",
+        title: "闇魔法・黑色暴牛團長",
+        avatar: "avatar_yami",
+        maxHp: 115,
+        maxMana: 3,
+        accent: "#c084fc",
+        glow: "rgba(192, 132, 252, 0.24)",
+        passiveName: "闇纏三連斬",
+        passiveDesc: "每打出 3 張技能卡，自動追加一次【闇纏・居合斬】（16 基礎傷＋1 層闇蝕）。",
+        archetypes: "<strong>可選流派方向：</strong>①【闇蝕流血引爆流】（無明斬＋無間斬擊快速疊【闇蝕】，再用彼岸引爆） ②【黑洞氣感次元斬流】（黑洞＋氣感閃避回魔，專打高費次元斬／死突貫穿）"
+      }
     };
 
     var EQUIPMENT_DB = [
@@ -796,7 +1112,7 @@
       "失落之約", "命運交錯", "王宮決戰前夕", "深淵門扉", "深淵言靈惡魔・扎格列德"
     ];
 
-    var STORAGE_KEY = "bc_card_duel_save_v3";
+    var STORAGE_KEY = "bc_card_duel_save_v6";
 
     function getDefaultSave() {
       var unlockedSkills = {};
@@ -822,7 +1138,7 @@
         }
       }
       return {
-        gold: 400,
+        gold: 500,
         shards: 30,
         selectedChar: "asta",
         unlockedStage: 1,
@@ -833,13 +1149,14 @@
         skillLevels: skillLevels,
         decks: decks,
         equipLevels: equipLevels,
-        equipped: { weapon: "eq_w_rust", armor: "eq_a_robe", relic: "eq_r_clover" }
+        equipped: { weapon: "eq_w_rust", armor: "eq_a_robe", relic: "eq_r_clover" },
+        lastSavedAt: "尚未手動存檔"
       };
     }
 
     function loadSave() {
       try {
-        var raw = localStorage.getItem(STORAGE_KEY);
+        var raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem("bc_card_duel_save_v5");
         if (!raw) return getDefaultSave();
         var parsed = JSON.parse(raw);
         var def = getDefaultSave();
@@ -852,7 +1169,7 @@
           }
         }
         return {
-          gold: typeof parsed.gold === "number" ? parsed.gold : 400,
+          gold: typeof parsed.gold === "number" ? parsed.gold : 500,
           shards: typeof parsed.shards === "number" ? parsed.shards : 30,
           selectedChar: CHARACTERS[parsed.selectedChar] ? parsed.selectedChar : "asta",
           unlockedStage: Math.min(30, Math.max(1, parsed.unlockedStage || 1)),
@@ -863,7 +1180,8 @@
           skillLevels: parsed.skillLevels || def.skillLevels,
           decks: parsed.decks,
           equipLevels: parsed.equipLevels || def.equipLevels,
-          equipped: parsed.equipped || def.equipped
+          equipped: parsed.equipped || def.equipped,
+          lastSavedAt: parsed.lastSavedAt || "自動讀取"
         };
       } catch (e) {
         return getDefaultSave();
@@ -871,7 +1189,10 @@
     }
 
     var saveData = loadSave();
-    function persistSave() {
+    function persistSave(isManual) {
+      if (isManual) {
+        saveData.lastSavedAt = new Date().toLocaleString("zh-HK");
+      }
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(saveData));
       } catch (e) {}
@@ -887,7 +1208,7 @@
 
     function formatSkillDesc(skill) {
       var val = getSkillScaledVal(skill);
-      return skill.desc.replace("{v}", "<strong>" + val + "</strong>");
+      return skill.desc.replace("{v}", "<strong style='color:#fff;'>" + val + "</strong>");
     }
 
     function getEquipBonusVal(eq) {
@@ -949,18 +1270,43 @@
       var container = document.getElementById("particles-container");
       if (!container) return;
       container.innerHTML = "";
-      for (var i = 0; i < 20; i++) {
+      for (var i = 0; i < 22; i++) {
         var p = document.createElement("div");
         p.className = "particle";
-        p.style.left = ((i * 5) % 100) + "%";
+        p.style.left = ((i * 4.7) % 100) + "%";
         p.style.animationDuration = (5 + (i % 6)) + "s";
         p.style.animationDelay = ((i % 4) * 0.8) + "s";
         container.appendChild(p);
       }
     }
 
+    function updateTabNotifyDots() {
+      var skills = SKILL_POOL[saveData.selectedChar];
+      var canGrimoireAction = saveData.gold >= 100;
+      for (var i = 0; i < skills.length; i++) {
+        var sk = skills[i];
+        var unlocked = !!saveData.unlockedSkills[sk.id];
+        var shardNeed = sk.rarity === "SSR" ? 25 : 15;
+        if (!unlocked && saveData.shards >= shardNeed) canGrimoireAction = true;
+      }
+      document.getElementById("dot-grimoire").classList.toggle("show", canGrimoireAction);
+
+      var canEquipAction = false;
+      for (var e = 0; e < EQUIPMENT_DB.length; e++) {
+        var eq = EQUIPMENT_DB[e];
+        var owned = !!saveData.equipLevels[eq.id];
+        var lv = saveData.equipLevels[eq.id] || 1;
+        if (!owned && saveData.gold >= eq.price) canEquipAction = true;
+        if (owned && lv < 5 && saveData.gold >= lv * 150) canEquipAction = true;
+      }
+      document.getElementById("dot-equip").classList.toggle("show", canEquipAction);
+    }
+
     function renderLobby() {
       var charObj = CHARACTERS[saveData.selectedChar];
+      document.documentElement.style.setProperty("--theme-accent", charObj.accent);
+      document.documentElement.style.setProperty("--theme-glow", charObj.glow);
+
       var eqStats = getPlayerEquipStats();
       var totalHp = charObj.maxHp + eqStats.bonusHp;
       var totalMana = Math.min(4, charObj.maxMana + eqStats.bonusMana);
@@ -981,7 +1327,7 @@
           btn.type = "button";
           btn.className = "char-card" + (saveData.selectedChar === key ? " active" : "");
           btn.innerHTML =
-            '<div class="avatar-frame">' + SVG_ICONS[cfg.avatar] + '</div>' +
+            '<div class="avatar-frame">' + getAvatarHtml(key, cfg.avatar, cfg.name) + '</div>' +
             '<div class="char-name">' + cfg.name + '</div>' +
             '<div class="char-sub">' + cfg.title + '</div>';
           btn.onclick = function() {
@@ -999,11 +1345,21 @@
 
       document.getElementById("selected-char-banner").innerHTML =
         '<div class="banner-top">' +
-          '<div class="avatar-frame">' + SVG_ICONS[charObj.avatar] + '</div>' +
+          '<div class="avatar-frame lg">' + getAvatarHtml(saveData.selectedChar, charObj.avatar, charObj.name) + '</div>' +
           '<div>' +
-            '<div style="font-weight:800; font-size:15px;">' + charObj.name + '</div>' +
-            '<div class="muted">生命 ' + totalHp + '（+' + eqStats.bonusHp + '）｜魔力 ' + totalMana + '｜攻傷 +' + eqStats.bonusAtk + '</div>' +
+            '<div style="font-weight:900; font-size:16px; color:#fff;">' + charObj.name + '</div>' +
+            '<div class="muted" style="color:' + charObj.accent + '; font-weight:700;">' + charObj.title + '</div>' +
           '</div>' +
+        '</div>' +
+        '<div class="passive-box">' +
+          '<span class="passive-title">✨ 專屬被動：【' + charObj.passiveName + '】</span>' +
+          '<span style="color:#e2e8f0;">' + charObj.passiveDesc + '</span>' +
+        '</div>' +
+        '<div class="stat-mini-grid">' +
+          '<div class="stat-mini-box"><span>最大生命</span><strong>' + totalHp + '</strong></div>' +
+          '<div class="stat-mini-box"><span>每回魔力</span><strong>' + totalMana + '</strong></div>' +
+          '<div class="stat-mini-box"><span>攻擊增幅</span><strong>+' + eqStats.bonusAtk + '</strong></div>' +
+          '<div class="stat-mini-box"><span>開局護盾</span><strong>+' + eqStats.startShield + '</strong></div>' +
         '</div>' +
         '<div class="equip-slots-mini">' +
           '<div class="slot-pill"><span>武器</span><strong>' + (wObj ? wObj.name + ' +' + (saveData.equipLevels[wObj.id] || 1) : '未裝備') + '</strong></div>' +
@@ -1011,9 +1367,12 @@
           '<div class="slot-pill"><span>飾品</span><strong>' + (rObj ? rObj.name + ' +' + (saveData.equipLevels[rObj.id] || 1) : '未裝備') + '</strong></div>' +
         '</div>';
 
+      document.getElementById("character-style-guide").innerHTML = charObj.archetypes;
+
       var activeDeck = saveData.decks[saveData.selectedChar];
       document.getElementById("deck-count-tab").textContent = activeDeck.length;
 
+      updateTabNotifyDots();
       renderDeckBuilder();
       renderGrimoireCatalog();
       renderEquipCatalog();
@@ -1033,7 +1392,7 @@
           var card = document.createElement("button");
           card.type = "button";
           card.disabled = !isUnlocked;
-          card.className = "skill-card" + (inDeck ? " in-deck" : "") + (!isUnlocked ? " locked-card" : "");
+          card.className = "skill-card rarity-border-" + skill.rarity.toLowerCase() + (inDeck ? " in-deck" : "") + (!isUnlocked ? " locked-card" : "");
           card.innerHTML =
             '<div>' +
               '<div class="skill-head">' +
@@ -1053,7 +1412,7 @@
               '<p class="muted" style="margin-top:8px;">' + formatSkillDesc(skill) + '</p>' +
             '</div>' +
             '<div class="deck-status-tag" style="color:' + (!isUnlocked ? "var(--muted)" : inDeck ? "var(--success)" : "var(--gold)") + ';">' +
-              (!isUnlocked ? "尚未領悟（請至技能書召喚分頁解鎖）" : inDeck ? "已編入出戰牌組（點擊移出）" : "點擊編入出戰牌組") +
+              (!isUnlocked ? "尚未領悟（請至技能書召喚分頁解鎖）" : inDeck ? "✓ 已編入出戰牌組（點擊移出）" : "+ 點擊編入出戰牌組") +
             '</div>';
           if (isUnlocked) {
             card.onclick = function() { toggleCardInDeck(skill.id); };
@@ -1076,7 +1435,7 @@
           var unlockShardCost = skill.rarity === "SSR" ? 25 : 15;
 
           var box = document.createElement("div");
-          box.className = "skill-card" + (isUnlocked ? "" : " locked-card");
+          box.className = "skill-card rarity-border-" + skill.rarity.toLowerCase() + (isUnlocked ? "" : " locked-card");
 
           var actionBtn = document.createElement("button");
           actionBtn.type = "button";
@@ -1127,7 +1486,7 @@
     function summonSkillBook(times) {
       var cost = times === 5 ? 450 : 100;
       if (saveData.gold < cost) {
-        openInfoModal("金幣不足", "<p>進行 " + times + " 次技能書領悟需要 <strong>" + cost + " 金幣</strong>，你目前只有 " + saveData.gold + " 金幣。請先挑戰主線或無盡模式賺取金幣！</p>");
+        openInfoModal("金幣不足", "<p>進行 " + times + " 次技能書領悟需要 <strong>" + cost + " 金幣</strong>，你目前只有 " + saveData.gold + " 金幣。</p>");
         return;
       }
       saveData.gold -= cost;
@@ -1135,19 +1494,26 @@
       var results = [];
 
       for (var t = 0; t < times; t++) {
-        var picked = pool[Math.floor(Math.random() * pool.length)];
+        var weightedPool = [];
+        for (var p = 0; p < pool.length; p++) {
+          weightedPool.push(pool[p]);
+          if (!saveData.unlockedSkills[pool[p].id]) {
+            weightedPool.push(pool[p]);
+          }
+        }
+        var picked = weightedPool[Math.floor(Math.random() * weightedPool.length)];
         if (!saveData.unlockedSkills[picked.id]) {
           saveData.unlockedSkills[picked.id] = true;
           saveData.skillLevels[picked.id] = 1;
-          results.push("<div><strong>【新領悟】</strong><span class='rarity-" + picked.rarity.toLowerCase() + "'>[" + picked.rarity + "]</span> " + picked.name + "（已解鎖！）</div>");
+          results.push("<div>✨ <strong>【新領悟】</strong><span class='rarity-" + picked.rarity.toLowerCase() + "'>[" + picked.rarity + "]</span> " + picked.name + "（已解鎖！）</div>");
         } else {
           var curLv = saveData.skillLevels[picked.id] || 1;
           if (curLv < 5) {
             saveData.skillLevels[picked.id] = curLv + 1;
-            results.push("<div><strong>【奧義昇華】</strong>" + picked.name + " 提升至 <strong>Lv." + (curLv + 1) + "</strong>！</div>");
+            results.push("<div>⬆️ <strong>【奧義昇華】</strong>" + picked.name + " 提升至 <strong>Lv." + (curLv + 1) + "</strong>！</div>");
           } else {
             saveData.shards += 8;
-            results.push("<div><strong>【滿級轉換】</strong>" + picked.name + " 已滿級，自動轉化為 <strong>8 張魔導書殘頁</strong>。</div>");
+            results.push("<div>📜 <strong>【滿級轉換】</strong>" + picked.name + " 已滿級，自動轉化為 <strong>8 張魔導書殘頁</strong>。</div>");
           }
         }
       }
@@ -1213,7 +1579,7 @@
                 '</div>' +
               '</div>' +
             '</div>' +
-            '<p class="muted" style="margin-top:8px;">' + eq.desc.replace("{v}", "<strong>" + bonusVal + "</strong>") + '</p>';
+            '<p class="muted" style="margin-top:8px;">' + eq.desc.replace("{v}", "<strong style='color:#fff;'>" + bonusVal + "</strong>") + '</p>';
 
           var actDiv = document.createElement("div");
           actDiv.className = "equip-actions";
@@ -1306,6 +1672,74 @@
       renderLobby();
     }
 
+    /* ===== 存取遊戲存檔系統 ===== */
+    function openSaveManagerModal() {
+      var encoded = "";
+      try {
+        encoded = btoa(unescape(encodeURIComponent(JSON.stringify(saveData))));
+      } catch (e) {}
+
+      var unlockedCount = Object.keys(saveData.unlockedSkills).length;
+      var html =
+        "<div class='save-slot-card'>" +
+          "<div style='display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;'>" +
+            "<div>" +
+              "<strong>目前瀏覽器存檔槽</strong>" +
+              "<div class='muted'>最後手動儲存：<span style='color:var(--gold);'>" + saveData.lastSavedAt + "</span></div>" +
+              "<div class='muted'>進度：主線第 " + saveData.unlockedStage + " 關｜無盡最高 " + saveData.endlessBest + " 波｜技能書 " + unlockedCount + "/40 張</div>" +
+            "</div>" +
+            "<button type='button' class='btn-success btn-sm' onclick='manualSaveNow()'>立即儲存進度</button>" +
+          "</div>" +
+        "</div>" +
+        "<p class='muted'><strong>跨裝置／防遺失備份碼：</strong>複製下方存檔碼保存；若更換瀏覽器或清除快取，貼上存檔碼即可還原全部進度。</p>" +
+        "<textarea id='save-code-input' class='save-code-area'>" + encoded + "</textarea>" +
+        "<div style='display:flex; gap:8px; justify-content:space-between; flex-wrap:wrap;'>" +
+          "<button type='button' class='btn-danger btn-sm' onclick='resetAllSaveData()'>重置存檔（重新開局）</button>" +
+          "<div style='display:flex; gap:8px;'>" +
+            "<button type='button' class='btn-ghost btn-sm' onclick='copySaveCode()'>複製存檔碼</button>" +
+            "<button type='button' class='btn-gold btn-sm' onclick='importSaveCode()'>讀取並覆蓋存檔</button>" +
+          "</div>" +
+        "</div>";
+      openInfoModal("💾 存取遊戲存檔與備份還原", html);
+    }
+
+    function manualSaveNow() {
+      persistSave(true);
+      openSaveManagerModal();
+    }
+
+    function copySaveCode() {
+      var el = document.getElementById("save-code-input");
+      if (!el) return;
+      el.select();
+      try { document.execCommand("copy"); } catch (e) {}
+      openInfoModal("複製成功", "<p>存檔碼已複製到剪貼簿，請妥善保存！</p>");
+    }
+
+    function importSaveCode() {
+      var el = document.getElementById("save-code-input");
+      if (!el || !el.value.trim()) return;
+      try {
+        var jsonStr = decodeURIComponent(escape(atob(el.value.trim())));
+        var parsed = JSON.parse(jsonStr);
+        if (!parsed || typeof parsed.gold !== "number" || !parsed.decks) throw new Error("invalid");
+        parsed.lastSavedAt = new Date().toLocaleString("zh-HK") + "（匯入還原）";
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
+        saveData = loadSave();
+        renderLobby();
+        openInfoModal("讀取存檔成功", "<p>已成功載入存檔進度！</p>");
+      } catch (e) {
+        openInfoModal("讀取失敗", "<p>存檔碼格式不正確或已損毀，請確認是否完整貼上。</p>");
+      }
+    }
+
+    function resetAllSaveData() {
+      saveData = getDefaultSave();
+      persistSave(true);
+      renderLobby();
+      openInfoModal("存檔已重置", "<p>已恢復為全新初始存檔（500 金幣、30 魔導書殘頁）。</p>");
+    }
+
     function openStageModal() {
       var list = document.getElementById("stage-list");
       list.innerHTML = "";
@@ -1313,12 +1747,16 @@
         (function(st) {
           var locked = st > saveData.unlockedStage;
           var cleared = saveData.clearedStages.indexOf(st) >= 0;
+          var totalW = getStageTotalWaves(st);
+          var isFiveStage = (st % 5 === 0);
           var btn = document.createElement("button");
           btn.type = "button";
           btn.disabled = locked;
-          btn.className = "stage-item" + (cleared ? " cleared" : "") + (locked ? " locked" : "");
+          btn.className = "stage-item" + (isFiveStage ? " boss-stage" : "") + (cleared ? " cleared" : "") + (locked ? " locked" : "");
           var tag = st === 30 ? "（最新主線）" : cleared ? "・已通關" : locked ? "・未解鎖" : "";
-          btn.innerHTML = '<div><strong>第 ' + st + ' 關' + tag + '</strong></div><div class="muted">' + STORY_TITLES[st - 1] + '（25波）</div>';
+          btn.innerHTML =
+            '<div><strong>第 ' + st + ' 關' + tag + '</strong></div>' +
+            '<div class="muted">' + STORY_TITLES[st - 1] + '（' + totalW + '波）</div>';
           btn.onclick = function() {
             closeModal("stage-modal");
             startBattle("story", st);
@@ -1353,16 +1791,56 @@
       if (el) el.classList.remove("open");
     }
 
+    function triggerCombatEffect(targetSide, popupText, popupColor, animClass) {
+      var boxId = targetSide === "enemy" ? "enemy-combatant-box" : "player-combatant-box";
+      var box = document.getElementById(boxId);
+      if (!box) return;
+
+      if (animClass) {
+        box.classList.remove("shake-hit", "shield-flash");
+        void box.offsetWidth;
+        box.classList.add(animClass);
+        setTimeout(function() { box.classList.remove(animClass); }, 420);
+      }
+
+      if (popupText) {
+        var pop = document.createElement("div");
+        pop.className = "float-popup";
+        pop.style.color = popupColor || "#fff";
+        pop.textContent = popupText;
+        box.appendChild(pop);
+        setTimeout(function() { if (pop.parentNode) pop.parentNode.removeChild(pop); }, 980);
+      }
+    }
+
+    function openPileModal(pileType) {
+      if (!battle) return;
+      var ids = pileType === "draw" ? battle.drawPile : battle.discardPile;
+      var title = pileType === "draw" ? "剩餘牌庫（" + ids.length + " 張）" : "棄牌堆（" + ids.length + " 張）";
+      if (ids.length === 0) {
+        openInfoModal(title, "<p class='muted'>目前沒有任何卡牌。</p>");
+        return;
+      }
+      var pool = SKILL_POOL[battle.charKey];
+      var itemsHtml = ids.map(function(id) {
+        var sk = pool.filter(function(x) { return x.id === id; })[0];
+        if (!sk) return "";
+        return "<div style='padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.06);'><strong>" + sk.name + "</strong> <span class='cost-tag'>" + sk.cost + " 費</span><div class='muted'>" + formatSkillDesc(sk) + "</div></div>";
+      }).join("");
+      openInfoModal(title, itemsHtml);
+    }
+
     function createEnemy(mode, stage, wave) {
-      var scale = mode === "story" ? (stage - 1) * 8 + wave * 6 : wave * 9;
-      var isBoss = mode === "story" && wave === 25;
+      var totalWaves = mode === "story" ? getStageTotalWaves(stage) : 999;
+      var scale = mode === "story" ? (stage - 1) * 9 + wave * 7 : wave * 9;
+      var isBoss = mode === "story" && wave === totalWaves;
       var bossName = stage === 30 ? "【最終魔王】深淵言靈惡魔・扎格列德" : "【第" + stage + "關首領】" + STORY_TITLES[stage - 1] + "守護者";
       return {
         name: isBoss ? bossName : "魔導敵人・第 " + wave + " 波",
         avatar: isBoss ? "avatar_boss" : "avatar_enemy",
         hp: 55 + scale + (isBoss ? 65 : 0),
         maxHp: 55 + scale + (isBoss ? 65 : 0),
-        shield: isBoss ? 20 : 0,
+        shield: isBoss ? 22 : 0,
         atk: 10 + Math.floor(scale * 0.25) + (isBoss ? 8 : 0),
         bleed: 0,
         weaken: 0,
@@ -1388,10 +1866,12 @@
       var eqStats = getPlayerEquipStats();
       var totalHp = cfg.maxHp + eqStats.bonusHp;
       var totalMana = Math.min(4, cfg.maxMana + eqStats.bonusMana);
+      var totalWaves = mode === "story" ? getStageTotalWaves(stage) : 0;
 
       battle = {
         mode: mode,
         stage: stage,
+        totalWaves: totalWaves,
         wave: 1,
         charKey: charKey,
         eqStats: eqStats,
@@ -1411,6 +1891,8 @@
         thornsTurns: 0,
         evadeBonus: 0,
         kiRefundNextEvade: false,
+        cardsPlayedCounter: 0,
+        noellePassiveUsedThisTurn: false,
         deckIds: saveData.decks[charKey].slice(),
         drawPile: [],
         discardPile: [],
@@ -1452,6 +1934,7 @@
             id: template.id,
             name: template.name,
             cost: template.cost,
+            rarity: template.rarity,
             type: template.type,
             icon: template.icon,
             desc: template.desc,
@@ -1468,6 +1951,7 @@
       battle.evadeBonus = 0;
       battle.deflectShield = false;
       battle.kiRefundNextEvade = false;
+      battle.noellePassiveUsedThisTurn = false;
       battle.shield += battle.eqStats.turnShield;
       battle.hadShieldThisTurn = battle.shield > 0;
       battle.enemy.blackMoon = false;
@@ -1503,14 +1987,61 @@
     function dealDamageToEnemy(amount, ignoreShield) {
       var boostMult = 1 + battle.nextAtkBoost;
       battle.nextAtkBoost = 0;
-      var dmg = Math.max(0, Math.round((amount + battle.eqStats.bonusAtk) * boostMult));
+      var rawDmg = Math.max(0, Math.round((amount + battle.eqStats.bonusAtk) * boostMult));
+      var dmg = rawDmg;
+
+      // 阿斯塔被動天賦：【反魔法破盾】對護盾造成額外 +35% 破盾傷害
       if (!ignoreShield && battle.enemy.shield > 0) {
-        var absorbed = Math.min(battle.enemy.shield, dmg);
+        var shieldAtkPower = battle.charKey === "asta" ? Math.round(dmg * 1.35) : dmg;
+        var absorbed = Math.min(battle.enemy.shield, shieldAtkPower);
         battle.enemy.shield -= absorbed;
-        dmg -= absorbed;
+        var remaining = Math.max(0, shieldAtkPower - absorbed);
+        dmg = battle.charKey === "asta" ? Math.round(remaining / 1.35) : remaining;
       }
+
       battle.enemy.hp = Math.max(0, battle.enemy.hp - dmg);
+      if (rawDmg > 0) {
+        triggerCombatEffect("enemy", "-" + rawDmg + (ignoreShield ? " 貫穿!" : ""), "#f43f5e", "shake-hit");
+      }
       return dmg;
+    }
+
+    function gainPlayerShield(amount) {
+      if (amount <= 0) return;
+      var totalGain = amount;
+      // 諾艾兒被動天賦：【海神潮汐護體】每回合首次獲得護盾額外 +4 護盾並累積 1 層水壓
+      if (battle.charKey === "noelle" && !battle.noellePassiveUsedThisTurn) {
+        battle.noellePassiveUsedThisTurn = true;
+        totalGain += 4;
+        battle.waterPressure += 1;
+        pushLog("✨ 被動【海神潮汐護體】觸發：額外獲得 4 護盾並累積 1 層【水壓】！");
+      }
+      battle.shield += totalGain;
+      battle.hadShieldThisTurn = true;
+      triggerCombatEffect("player", "🛡️ +" + totalGain, "#38bdf8", "shield-flash");
+    }
+
+    function healPlayer(amount) {
+      if (amount <= 0) return;
+      battle.playerHp = Math.min(battle.playerMaxHp, battle.playerHp + amount);
+      triggerCombatEffect("player", "❤️ +" + amount, "#4ade80", "");
+    }
+
+    function triggerPostCardPassives() {
+      battle.cardsPlayedCounter += 1;
+
+      // 尤諾被動天賦：【精靈風壓】每打出 2 張技能卡獲得 1 層風精靈共鳴
+      if (battle.charKey === "yuno" && battle.cardsPlayedCounter % 2 === 0) {
+        battle.windResonance += 1;
+        pushLog("✨ 被動【精靈風壓】觸發：累計出牌 2 張，額外獲得 1 層【風精靈共鳴】！");
+      }
+
+      // 夜見被動天賦：【闇纏三連斬】每打出 3 張技能卡自動追加一次闇纏居合斬
+      if (battle.charKey === "yami" && battle.cardsPlayedCounter % 3 === 0) {
+        var extraDmg = dealDamageToEnemy(16, false);
+        battle.enemy.bleed += 1;
+        pushLog("✨ 被動【闇纏三連斬】觸發：自動追加【闇纏・居合斬】，造成 " + extraDmg + " 傷害並附加 1 層【闇蝕】！");
+      }
     }
 
     function playCard(uid) {
@@ -1532,181 +2063,184 @@
 
       if (card.id === "asta_slash") {
         var d1 = dealDamageToEnemy(val, false);
-        battle.shield += 4;
-        pushLog("使用【斷魔大劍・橫斬】：造成 " + d1 + " 傷害並獲得 4 護盾。");
+        gainPlayerShield(4);
+        pushLog("發動【斷魔大劍・反魔法斬擊】：造成 " + d1 + " 反魔法傷害並獲得 4 護盾。");
       } else if (card.id === "demon_slayer_slash") {
         var hadShield = battle.enemy.shield > 0;
         var d2 = dealDamageToEnemy(val + (hadShield ? 14 : 0), false);
-        pushLog("使用【斷魔大劍・重斬】：造成 " + d2 + " 傷害" + (hadShield ? "（觸發破盾追擊）" : "") + "。");
+        pushLog("發動【斷魔大劍・破魔重擊】：造成 " + d2 + " 傷害" + (hadShield ? "（破盾追擊生效！）" : "") + "。");
       } else if (card.id === "magic_deflect") {
-        battle.shield += val;
-        battle.hadShieldThisTurn = true;
+        gainPlayerShield(val);
         battle.deflectShield = true;
-        pushLog("使用【宿魔劍・魔力彈反】：獲得 " + val + " 護盾，擋下攻擊時反擊 12 傷害。");
+        pushLog("發動【宿魔劍・魔力彈反】：獲得 " + val + " 護盾，擋下攻擊時反擊 12 傷害。");
       } else if (card.id === "anti_magic_roar") {
-        battle.playerHp = Math.min(battle.playerMaxHp, battle.playerHp + val);
+        healPlayer(val);
         battle.nextAtkBoost += 0.25;
         drawCards(1);
-        pushLog("使用【不屈的咆哮】：回復 " + val + " 生命並抽 1 張牌，下次攻擊增傷 25%。");
+        pushLog("發動【絕對不放棄的咆哮】：回復 " + val + " 生命並抽 1 張牌，下次攻擊增傷 25%。");
       } else if (card.id === "demon_dweller_absorb") {
         var d3 = dealDamageToEnemy(val, false);
         var shGain = Math.round(d3 * 0.5);
-        battle.shield += shGain;
-        pushLog("使用【宿魔劍・魔力解放斬】：造成 " + d3 + " 傷害並轉化 " + shGain + " 護盾。");
+        gainPlayerShield(shGain);
+        pushLog("發動【宿魔劍・魔力解放斬】：造成 " + d3 + " 傷害並轉化 " + shGain + " 護盾。");
       } else if (card.id === "black_meteorite") {
         var d4 = dealDamageToEnemy(val, false);
         battle.evadeBonus += 25;
-        pushLog("使用【黑色隕石】：造成 " + d4 + " 傷害，閃避率 +25%。");
+        pushLog("發動【黑色隕石】：造成 " + d4 + " 傷害，閃避率 +25%。");
       } else if (card.id === "demon_destroyer") {
         battle.enemy.shield = 0;
         battle.enemy.weaken = 0;
         var d5 = dealDamageToEnemy(val, true);
-        pushLog("使用【滅魔之劍・因果解放】：清除敵人護盾與狀態，造成 " + d5 + " 傷害。");
+        pushLog("發動【滅魔之劍・魔力消滅】：清除敵人護盾與減傷狀態，造成 " + d5 + " 貫穿傷害。");
       } else if (card.id === "black_hurricane") {
         var tA = 0;
         for (var h1 = 0; h1 < 3; h1++) tA += dealDamageToEnemy(val, true);
-        pushLog("使用【黑色暴風】：3 段貫穿連斬，共造成 " + tA + " 傷害。");
+        pushLog("發動【黑色暴風】：3 段反魔法連斬，共造成 " + tA + " 傷害。");
       } else if (card.id === "devil_union_slash") {
         var tA2 = dealDamageToEnemy(val, true) + dealDamageToEnemy(val, true);
         battle.mana += 1;
-        pushLog("使用【惡魔同化・黑刃連擊】：造成 2 段共 " + tA2 + " 貫穿傷害並回復 1 魔力。");
+        pushLog("發動【惡魔同化・黑刃連擊】：造成 2 段共 " + tA2 + " 貫穿傷害並回復 1 魔力。");
       } else if (card.id === "black_divider") {
         var d6 = dealDamageToEnemy(val, true);
-        pushLog("使用【黑色分割者】：無視護盾斬出 " + d6 + " 巨額傷害。");
+        pushLog("發動【黑色分割者】：無視護盾斬出 " + d6 + " 巨額傷害。");
       } else if (card.id === "wind_blade") {
         var wB = 1 + battle.windResonance * 0.2;
         var y1 = dealDamageToEnemy(val * wB * spiritMult, false);
         battle.windResonance += 1;
-        pushLog("使用【風魔法・疾風白弓】：造成 " + y1 + " 傷害，疊加 1 層【風精靈共鳴】（現有 " + battle.windResonance + " 層）。");
+        pushLog("發動【風創成・疾風白弓】：造成 " + y1 + " 傷害，疊加 1 層【風精靈共鳴】（現有 " + battle.windResonance + " 層）。");
       } else if (card.id === "sylph_breeze") {
         var wB2 = 1 + battle.windResonance * 0.2;
         var y2 = dealDamageToEnemy(val * wB2 * spiritMult, false) + dealDamageToEnemy(val * wB2 * spiritMult, false);
         if (battle.windResonance >= 2) drawCards(1);
-        pushLog("使用【風精靈的吐息】：造成 2 段共 " + y2 + " 傷害" + (battle.windResonance >= 2 ? "並抽 1 張牌" : "") + "。");
+        pushLog("發動【風精靈的吐息】：造成 2 段共 " + y2 + " 傷害" + (battle.windResonance >= 2 ? "並抽 1 張牌" : "") + "。");
       } else if (card.id === "wind_barrier") {
-        battle.shield += val;
-        battle.hadShieldThisTurn = true;
+        gainPlayerShield(val);
         battle.evadeBonus += 35;
-        pushLog("使用【風創成・旋風壁障】：獲得 " + val + " 護盾，閃避率 +35%。");
+        pushLog("發動【風創成・旋風壁障】：獲得 " + val + " 護盾，閃避率 +35%。");
       } else if (card.id === "gale_step") {
         drawCards(1);
         battle.evadeBonus += val;
-        pushLog("使用【疾風步法】：抽 1 張牌並獲得 +" + val + "% 閃避率。");
+        pushLog("發動【風魔法・疾風步法】：抽 1 張牌並獲得 +" + val + "% 閃避率。");
       } else if (card.id === "heavenly_wind_ark") {
-        battle.shield += val;
+        gainPlayerShield(val);
         battle.windResonance += 1;
-        pushLog("使用【天風方舟・守護旋風】：獲得 " + val + " 護盾並疊加 1 層【風精靈共鳴】。");
+        pushLog("發動【風創成・守護旋風】：獲得 " + val + " 護盾並疊加 1 層【風精靈共鳴】。");
       } else if (card.id === "spirit_dive") {
         battle.spiritDiveTurns = 2;
         battle.evadeBonus += 25;
         battle.mana += 1;
-        pushLog("使用【精靈同化】：進入同化形態 2 回合，回復 1 魔力。");
+        pushLog("發動【精靈同化】：進入同化形態 2 回合，回復 1 魔力。");
       } else if (card.id === "spirit_storm") {
         var stM = 1 + battle.windResonance * 0.25;
         var y4 = dealDamageToEnemy(val * stM * spiritMult, true);
-        pushLog("使用【精靈風暴】：消耗 " + battle.windResonance + " 層共鳴，造成 " + y4 + " 貫穿傷害。");
+        pushLog("發動【精靈風暴】：消耗 " + battle.windResonance + " 層共鳴，造成 " + y4 + " 貫穿傷害。");
         battle.windResonance = 0;
       } else if (card.id === "euros_arrow") {
         var critM = battle.spiritDiveTurns > 0 ? 1.4 : 1;
         var y5 = dealDamageToEnemy(val * spiritMult * critM, true);
-        pushLog("使用【風精靈・聖風之箭】：無視護盾射出 " + y5 + " 傷害。");
+        pushLog("發動【風精靈・聖風之箭】：無視護盾射出 " + y5 + " 傷害。");
       } else if (card.id === "boreas_halberd") {
         var y6 = dealDamageToEnemy(val * spiritMult, false);
         battle.enemy.weaken = Math.max(battle.enemy.weaken, 30);
-        pushLog("使用【風精靈・北風之戟】：造成 " + y6 + " 傷害並削弱敵人下回合攻擊 30%。");
+        pushLog("發動【風精靈・北風之戟】：造成 " + y6 + " 傷害並削弱敵人下回合攻擊 30%。");
       } else if (card.id === "zephyr_sword") {
         var igY = battle.spiritDiveTurns > 0;
         var y7 = dealDamageToEnemy(val * spiritMult, igY);
         if (igY) battle.mana += 1;
-        pushLog("使用【風精靈・西風之劍】：造成 " + y7 + " 傷害" + (igY ? "並回復 1 魔力" : "") + "。");
+        pushLog("發動【風精靈・西風之劍】：造成 " + y7 + " 傷害" + (igY ? "並回復 1 魔力" : "") + "。");
       } else if (card.id === "water_orb") {
         var n1 = dealDamageToEnemy(val * valkyrieMult, false);
         battle.waterPressure += 1;
-        pushLog("使用【水創成・水球】：造成 " + n1 + " 傷害，疊加 1 層【水壓】（現有 " + battle.waterPressure + " 層）。");
+        pushLog("發動【水創成・水球】：造成 " + n1 + " 傷害，累積 1 層【水壓】（現有 " + battle.waterPressure + " 層）。");
       } else if (card.id === "sea_dragon_cradle") {
-        battle.shield += val;
-        battle.hadShieldThisTurn = true;
-        pushLog("使用【海龍的搖籃】：獲得 " + val + " 護盾；護盾被破下回合 +1 魔力。");
+        gainPlayerShield(val);
+        pushLog("發動【海龍的搖籃】：獲得 " + val + " 護盾；護盾被破下回合 +1 魔力。");
       } else if (card.id === "water_lance") {
         var hitsN = battle.valkyrieTurns > 0 ? 4 : 2;
         var totN = 0;
         for (var hn = 0; hn < hitsN; hn++) totN += dealDamageToEnemy(val * valkyrieMult, battle.valkyrieTurns > 0);
-        pushLog("使用【水槍連刺】：發動 " + hitsN + " 段攻擊，共造成 " + totN + " 傷害。");
+        pushLog("發動【水創成・水槍連刺】：發動 " + hitsN + " 段攻擊，共造成 " + totN + " 傷害。");
       } else if (card.id === "royal_tide") {
-        battle.shield += val;
+        gainPlayerShield(val);
         battle.waterPressure += 1;
         drawCards(1);
-        pushLog("使用【王族潮汐】：獲得 " + val + " 護盾、1 層【水壓】並抽 1 張牌。");
+        pushLog("發動【西爾法王族潮汐】：獲得 " + val + " 護盾、1 層【水壓】並抽 1 張牌。");
       } else if (card.id === "valkyrie_dress") {
         battle.valkyrieTurns = 2;
         battle.evadeBonus += 30;
-        battle.shield += val;
-        pushLog("使用【女武神羽衣】：進入女武神形態 2 回合，獲得 " + val + " 護盾。");
+        gainPlayerShield(val);
+        pushLog("發動【女武神羽衣】：進入女武神形態 2 回合，獲得 " + val + " 護盾。");
       } else if (card.id === "sea_dragon_roar") {
         var pM = 1 + battle.waterPressure * 0.2;
         var sB = battle.shield * 0.5;
         var n3 = dealDamageToEnemy((val + sB) * pM * valkyrieMult, false);
-        pushLog("使用【海龍的咆哮】：消耗 " + battle.waterPressure + " 層【水壓】與護盾轉化，造成 " + n3 + " 傷害。");
+        pushLog("發動【海龍的咆哮】：消耗 " + battle.waterPressure + " 層【水壓】與護盾轉化，造成 " + n3 + " 傷害。");
         battle.waterPressure = 0;
       } else if (card.id === "point_blank_roar") {
         var n4 = dealDamageToEnemy((val + (battle.shield > 0 ? 12 : 0)) * valkyrieMult, true);
-        pushLog("使用【零距離・海龍咆哮】：無視護盾造成 " + n4 + " 水傷。");
+        pushLog("發動【零距離・海龍咆哮】：無視護盾造成 " + n4 + " 水傷。");
       } else if (card.id === "sea_dragon_lair") {
-        battle.shield += val;
+        gainPlayerShield(val);
         battle.thornsTurns = 2;
-        pushLog("使用【海龍的巢穴】：獲得 " + val + " 護盾，反彈水柱開啟 2 回合。");
+        pushLog("發動【海龍的巢穴】：獲得 " + val + " 護盾，反彈水柱開啟 2 回合。");
       } else if (card.id === "mermaid_form") {
         var n5 = dealDamageToEnemy(val * valkyrieMult, true);
         battle.evadeBonus += 50;
         drawCards(1);
-        pushLog("使用【女武神・海神形態】：造成 " + n5 + " 貫穿傷害，閃避 +50% 並抽 1 張牌。");
+        pushLog("發動【女武神・海神形態】：造成 " + n5 + " 貫穿傷害，閃避 +50% 並抽 1 張牌。");
       } else if (card.id === "saint_valkyrie") {
         var n6 = dealDamageToEnemy(val * valkyrieMult, true);
-        battle.playerHp = Math.min(battle.playerMaxHp, battle.playerHp + 20);
-        pushLog("使用【聖域女武神・終焉之槍】：造成 " + n6 + " 神聖水傷並回復 20 生命。");
+        healPlayer(20);
+        pushLog("發動【聖域女武神・終焉之槍】：造成 " + n6 + " 強力水槍傷害並回復 20 生命。");
       } else if (card.id === "ki_sense") {
         battle.evadeBonus += val;
         battle.kiRefundNextEvade = true;
-        pushLog("使用【「氣」的感知】：閃避率 +" + val + "%，成功閃避將回復 1 魔力。");
+        pushLog("發動【「氣」的感知】：閃避率 +" + val + "%，成功閃避將回復 1 魔力。");
       } else if (card.id === "dark_slash") {
         var m1 = dealDamageToEnemy(val, false);
         battle.enemy.bleed += 2;
-        pushLog("使用【闇纏・無明斬】：造成 " + m1 + " 傷害，附加 2 層【闇蝕】（現有 " + battle.enemy.bleed + " 層）。");
+        pushLog("發動【闇纏・無明斬】：造成 " + m1 + " 傷害，附加 2 層【闇蝕】（現有 " + battle.enemy.bleed + " 層）。");
       } else if (card.id === "iaido_slash") {
         var m2 = dealDamageToEnemy(val, false);
         battle.enemy.weaken = Math.max(battle.enemy.weaken, 25);
-        pushLog("使用【闇纏・居合斬】：造成 " + m2 + " 傷害，削弱敵人下一次攻擊 25%。");
+        pushLog("發動【闇纏・居合斬】：造成 " + m2 + " 傷害，削弱敵人下一次攻擊 25%。");
       } else if (card.id === "black_cocoon") {
-        battle.shield += val;
+        gainPlayerShield(val);
         battle.enemy.bleed += 1;
-        pushLog("使用【闇魔法・黑繭】：獲得 " + val + " 護盾並附加 1 層【闇蝕】。");
+        pushLog("發動【闇魔法・黑繭】：獲得 " + val + " 護盾並附加 1 層【闇蝕】。");
       } else if (card.id === "black_moon") {
         battle.enemy.blackMoon = true;
         drawCards(val);
-        pushLog("使用【闇魔法・黑洞】：抵消敵人下一次攻擊並抽 " + val + " 張牌。");
+        pushLog("發動【闇魔法・黑洞】：抵消敵人下一次攻擊並抽 " + val + " 張牌。");
       } else if (card.id === "equinox_slash") {
         var bC = battle.enemy.bleed;
         var m3 = dealDamageToEnemy(val + bC * 14, true);
         battle.enemy.bleed = 0;
-        pushLog("使用【無明斬・彼岸】：引爆 " + bC + " 層【闇蝕】，造成 " + m3 + " 傷害。");
+        pushLog("發動【無明斬・彼岸】：引爆 " + bC + " 層【闇蝕】，造成 " + m3 + " 傷害。");
       } else if (card.id === "dark_cloaked_avici") {
         var m4 = dealDamageToEnemy(val, false) + dealDamageToEnemy(val, false);
         battle.enemy.bleed += 2;
-        pushLog("使用【闇纏・無間斬擊】：造成 2 段共 " + m4 + " 傷害並附加 2 層【闇蝕】。");
+        pushLog("發動【闇纏・無間斬擊】：造成 2 段共 " + m4 + " 傷害並附加 2 層【闇蝕】。");
       } else if (card.id === "dimension_slash") {
         var m5 = dealDamageToEnemy(val, true);
-        pushLog("使用【闇纏・次元斬】：無視護盾造成 " + m5 + " 傷害。");
+        pushLog("發動【闇纏・次元斬】：無視護盾造成 " + m5 + " 傷害。");
       } else if (card.id === "death_thrust") {
         var m6 = dealDamageToEnemy(val, true);
-        pushLog("使用【闇纏・死突】：零距離貫穿造成 " + m6 + " 傷害。");
+        pushLog("發動【闇纏・死突】：直刺貫穿造成 " + m6 + " 傷害。");
       } else if (card.id === "equinox_dimension") {
         var bC2 = battle.enemy.bleed;
         var m7 = dealDamageToEnemy(val + bC2 * 14, true);
         battle.enemy.bleed = 0;
-        pushLog("使用【次元斬・彼岸】：無視護盾造成 " + m7 + " 毀滅傷害並引爆全部【闇蝕】。");
+        pushLog("發動【次元斬・彼岸】：無視護盾造成 " + m7 + " 毀滅傷害並引爆全部【闇蝕】。");
       }
 
-      if (checkEnemyDefeated()) return;
+      if (!checkEnemyDefeated()) {
+        triggerPostCardPassives();
+        if (checkEnemyDefeated()) return;
+      } else {
+        return;
+      }
+
       renderBattle();
     }
 
@@ -1715,7 +2249,7 @@
       pushLog("擊敗了「" + battle.enemy.name + "」！");
 
       if (battle.mode === "story") {
-        if (battle.wave < 25) {
+        if (battle.wave < battle.totalWaves) {
           setupWave(battle.wave + 1, false);
           return true;
         }
@@ -1732,7 +2266,7 @@
         persistSave();
         openInfoModal(
           "第 " + battle.stage + " 關通關！",
-          "<p>你成功完成第 " + battle.stage + " 關（25 波）征途，獲得 <strong>" + rewardGold + " 金幣</strong> 與 <strong>" + rewardShards + " 張魔導書殘頁</strong>。</p>" +
+          "<p>你成功完成第 " + battle.stage + " 關（" + battle.totalWaves + " 波）征途，獲得 <strong>" + rewardGold + " 金幣</strong> 與 <strong>" + rewardShards + " 張魔導書殘頁</strong>。</p>" +
           (battle.stage === 30 ? "<p class='muted' style='margin-top:8px;'>目前已達第 30 關最新主線進度，後續故事留待日後更新。</p>" : "")
         );
         enterLobby();
@@ -1755,6 +2289,7 @@
 
       if (battle.enemy.blackMoon) {
         pushLog("【黑洞】吞噬了「" + battle.enemy.name + "」的本次攻擊！");
+        triggerCombatEffect("enemy", "🌀 攻擊被吞噬", "#c084fc", "");
         battle.enemy.blackMoon = false;
         battle.enemy.weaken = 0;
         startPlayerTurn("");
@@ -1764,6 +2299,7 @@
       var evadeRoll = Math.random() * 100;
       if (evadeRoll < battle.evadeBonus) {
         pushLog("你成功閃避了「" + battle.enemy.name + "」的攻擊！");
+        triggerCombatEffect("player", "💨 MISS!", "#fde047", "");
         if (battle.kiRefundNextEvade) {
           battle.nextTurnBonusMana += 1;
           pushLog("「氣」的感知觸發：下回合額外回復 1 魔力！");
@@ -1793,8 +2329,10 @@
 
       if (rawAtk > 0) {
         battle.playerHp = Math.max(0, battle.playerHp - rawAtk);
+        triggerCombatEffect("player", "-" + rawAtk, "#f43f5e", "shake-hit");
         pushLog("「" + battle.enemy.name + "」對你造成 " + rawAtk + " 點傷害。");
       } else {
+        triggerCombatEffect("player", "🛡️ 格擋成功", "#38bdf8", "shield-flash");
         pushLog("你的護盾完全擋下「" + battle.enemy.name + "」的攻擊！");
       }
 
@@ -1847,53 +2385,83 @@
       document.getElementById("battle-mode-label").textContent =
         battle.mode === "story" ? "主線第 " + battle.stage + " 關・" + STORY_TITLES[battle.stage - 1] : "無盡生存模式";
       document.getElementById("wave-display").textContent =
-        battle.mode === "story" ? "第 " + battle.wave + " / 25 波" : "第 " + battle.wave + " 波";
+        battle.mode === "story" ? "第 " + battle.wave + " / " + battle.totalWaves + " 波" : "第 " + battle.wave + " 波";
+
+      var phaseEl = document.getElementById("phase-display");
+      if (battle.mode === "story") {
+        if (battle.wave === battle.totalWaves) {
+          phaseEl.textContent = "👑 首領決戰波";
+        } else if (battle.wave > 10) {
+          phaseEl.textContent = "🔥 決戰階段（第 11–15 波）";
+        } else if (battle.wave > 5) {
+          phaseEl.textContent = "⚔️ 中堅階段（第 6–10 波）";
+        } else {
+          phaseEl.textContent = "🛡️ 前鋒階段（第 1–5 波）";
+        }
+      } else {
+        phaseEl.textContent = "♾️ 無盡試煉";
+      }
+
       document.getElementById("mana-display").textContent = battle.mana + " / " + battle.maxMana;
 
-      document.getElementById("player-avatar-box").innerHTML = SVG_ICONS[charCfg.avatar];
+      document.getElementById("player-avatar-box").innerHTML = getAvatarHtml(battle.charKey, charCfg.avatar, charCfg.name);
       document.getElementById("player-name-display").textContent = charCfg.name;
-      document.getElementById("player-shield-display").textContent = "護盾：" + battle.shield;
+      document.getElementById("player-shield-display").textContent = "🛡️ 護盾：" + battle.shield;
       document.getElementById("player-hp-text").textContent = battle.playerHp + " / " + battle.playerMaxHp;
       document.getElementById("player-hp-bar").style.width = Math.max(0, (battle.playerHp / battle.playerMaxHp) * 100) + "%";
+      document.getElementById("player-atk-bonus-label").textContent = battle.eqStats.bonusAtk > 0 ? "裝備攻傷 +" + battle.eqStats.bonusAtk : "";
 
-      var pStatuses = [];
-      if (battle.eqStats.bonusAtk > 0) pStatuses.push("裝備攻傷 +" + battle.eqStats.bonusAtk);
-      if (battle.windResonance > 0) pStatuses.push("風精靈共鳴 x" + battle.windResonance);
-      if (battle.spiritDiveTurns > 0) pStatuses.push("精靈同化 " + battle.spiritDiveTurns + "回合");
-      if (battle.waterPressure > 0) pStatuses.push("水壓 x" + battle.waterPressure);
-      if (battle.valkyrieTurns > 0) pStatuses.push("女武神羽衣 " + battle.valkyrieTurns + "回合");
-      if (battle.thornsTurns > 0) pStatuses.push("反彈水柱 " + battle.thornsTurns + "回合");
-      if (battle.evadeBonus > 0) pStatuses.push("閃避率 +" + battle.evadeBonus + "%");
+      var pStatuses = ["✨ 被動：" + charCfg.passiveName];
+      if (battle.charKey === "yuno") pStatuses.push("風壓計數：" + (battle.cardsPlayedCounter % 2) + "/2");
+      if (battle.charKey === "yami") pStatuses.push("闇斬計數：" + (battle.cardsPlayedCounter % 3) + "/3");
+      if (battle.windResonance > 0) pStatuses.push("🌪️ 風精靈共鳴 x" + battle.windResonance);
+      if (battle.spiritDiveTurns > 0) pStatuses.push("✨ 精靈同化 " + battle.spiritDiveTurns + "回合");
+      if (battle.waterPressure > 0) pStatuses.push("💧 水壓 x" + battle.waterPressure);
+      if (battle.valkyrieTurns > 0) pStatuses.push("🔱 女武神羽衣 " + battle.valkyrieTurns + "回合");
+      if (battle.thornsTurns > 0) pStatuses.push("🌊 反彈水柱 " + battle.thornsTurns + "回合");
+      if (battle.evadeBonus > 0) pStatuses.push("💨 閃避率 +" + battle.evadeBonus + "%");
+      if (battle.nextAtkBoost > 0) pStatuses.push("🔥 下擊增傷 +" + Math.round(battle.nextAtkBoost * 100) + "%");
       document.getElementById("player-statuses").innerHTML = pStatuses.map(function(s) {
         return '<span class="status-badge">' + s + '</span>';
       }).join("");
 
-      document.getElementById("enemy-avatar-box").innerHTML = SVG_ICONS[battle.enemy.avatar];
+      document.getElementById("enemy-avatar-box").innerHTML = getAvatarHtml(battle.enemy.avatar, battle.enemy.avatar, battle.enemy.name);
       document.getElementById("enemy-name-display").textContent = battle.enemy.name;
-      document.getElementById("enemy-shield-display").textContent = "護盾：" + battle.enemy.shield;
+      document.getElementById("enemy-shield-display").textContent = "🛡️ 護盾：" + battle.enemy.shield;
       document.getElementById("enemy-hp-text").textContent = battle.enemy.hp + " / " + battle.enemy.maxHp;
       document.getElementById("enemy-hp-bar").style.width = Math.max(0, (battle.enemy.hp / battle.enemy.maxHp) * 100) + "%";
 
-      var eStatuses = ["預計攻擊：" + battle.enemy.atk];
-      if (battle.enemy.bleed > 0) eStatuses.push("闇蝕 x" + battle.enemy.bleed);
-      if (battle.enemy.weaken > 0) eStatuses.push("減傷 -" + battle.enemy.weaken + "%");
-      if (battle.enemy.blackMoon) eStatuses.push("被黑洞鎖定");
+      var intentEl = document.getElementById("enemy-intent-box");
+      if (battle.enemy.blackMoon) {
+        intentEl.className = "intent-banner blocked";
+        intentEl.textContent = "🌀 意圖：攻擊已被黑洞吞噬";
+      } else {
+        var mult = battle.enemy.weaken > 0 ? 1 - battle.enemy.weaken / 100 : 1;
+        var expectedAtk = Math.max(1, Math.round(battle.enemy.atk * mult));
+        intentEl.className = "intent-banner";
+        intentEl.textContent = "⚔️ 意圖：下回合攻擊 " + expectedAtk + (battle.enemy.weaken > 0 ? "（已削弱）" : "");
+      }
+
+      var eStatuses = [];
+      if (battle.enemy.bleed > 0) eStatuses.push("🩸 闇蝕 x" + battle.enemy.bleed + "（回合末 " + (battle.enemy.bleed * 8) + " 傷）");
+      if (battle.enemy.weaken > 0) eStatuses.push("⬇️ 攻擊削弱 -" + battle.enemy.weaken + "%");
       document.getElementById("enemy-statuses").innerHTML = eStatuses.map(function(s) {
         return '<span class="status-badge">' + s + '</span>';
       }).join("");
 
-      document.getElementById("draw-pile-info").textContent =
-        "牌庫剩餘：" + battle.drawPile.length + "｜棄牌堆：" + battle.discardPile.length;
+      document.getElementById("draw-pile-btn").textContent = "📚 牌庫剩餘：" + battle.drawPile.length;
+      document.getElementById("discard-pile-btn").textContent = "🗂️ 棄牌堆：" + battle.discardPile.length;
 
       var handEl = document.getElementById("hand-container");
       handEl.innerHTML = "";
       for (var i = 0; i < battle.hand.length; i++) {
         (function(card) {
           var lv = saveData.skillLevels[card.id] || 1;
+          var canPlay = card.cost <= battle.mana;
           var btn = document.createElement("button");
           btn.type = "button";
-          btn.className = "skill-card";
-          btn.disabled = card.cost > battle.mana;
+          btn.className = "battle-card" + (canPlay ? " playable" : "");
+          btn.disabled = !canPlay;
           btn.innerHTML =
             '<div>' +
               '<div class="skill-head">' +
